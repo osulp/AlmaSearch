@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Name>Alma Search</Name>
+  <Author>Brandon Straley and Gregorio Luis Ramirez</Author>
+  <Version>1.0</Version>
+  <Active>True</Active>
+  <Type>Addon</Type>
+  <Description>Extends the search capabilities of Alma to show more information such as volumes and where they are located</Description>
+  <Forms>
+    <Form>FormRequest</Form>
+  </Forms>
+  <Settings />
+  <Files>
+    <File>AlmaSearch.lua</File>
+  </Files>
+</Configuration>
