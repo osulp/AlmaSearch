@@ -62,7 +62,7 @@ function Init()
                 
 			end
 
-            ExLibrisForm.Browser:SetFormValue("searchForm","showMoreOptions", "osu_alma");
+            
 			 		          
 end
 
@@ -77,8 +77,8 @@ function SearchISxN()
     
     if GetFieldValue("Transaction", "ISSN") ~= "" then
         sep = "%(";
-		
 		fields = {};
+        issn = GetFieldValue("Transaction", "ISSN");
 		issn:gsub("([^"..sep.."]*)"..sep, function(c) table.insert(fields, c) end);
         
         --interfaceMngr:ShowMessage(fields.Count, "debug");
@@ -125,7 +125,8 @@ function SearchTitle()
 		
 		ExLibrisForm.Browser:SetFormValue("searchForm","search_field", Articletitle);
 	end
-	   ExLibrisForm.Browser:ClickObject("goButton")
+       ExLibrisForm.Browser:SetFormValue("searchForm","scp.scps", "scope:(OSU),scope:(E-OSU)");
+	   ExLibrisForm.Browser:ClickObject("goButton");
 end
 
 
