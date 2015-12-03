@@ -22,6 +22,7 @@ settings.Popup = GetSetting("Popup");
 settings.AddonRibbonName = GetSetting("AddonRibbonName");
 settings.StartwithISxN = GetSetting("StartwithISxN");
 settings.DefaultScope = GetSetting("DefaultScope");
+local searchExactTitle = false;
 local interfaceMngr = nil;
 local ExLibrisForm = {};
 local libraryurl = settings.localurl
@@ -50,6 +51,7 @@ function Init()
 			ExLibrisForm.RibbonPage = ExLibrisForm.Form:GetRibbonPage("ExLibris");
 		    ExLibrisForm.RibbonPage:CreateButton("Search ISxN", GetClientImage("Search32"), "SearchISxN", settings.AddonRibbonName);
 			ExLibrisForm.RibbonPage:CreateButton("Search Title", GetClientImage("Search32"), "SearchTitle", settings.AddonRibbonName);
+            ExLibrisForm.RibbonPage:CreateButton("Search Exact Title", GetClientImage("Search32"), "SearchExactTitle", settings.AddonRibbonName);
 			ExLibrisForm.RibbonPage:CreateButton("Input Location/ Call Number", GetClientImage("Borrowing32"), "InputLocation", "Location Info");
 			
 			ExLibrisForm.Form:Show();
@@ -58,15 +60,13 @@ function Init()
 			    if settings.StartwithISxN and GetFieldValue("Transaction", "ISSN") ~= "" then
 				   ExLibrisForm.Browser:RegisterPageHandler("formExists", "searchForm", "SearchISxN", false);
 			    else
+
                    ExLibrisForm.Browser:RegisterPageHandler("formExists", "searchForm", "SearchTitle", false);
 				end
-                --libraryurl = "https://api-na.hosted.exlibrisgroup.com/primo/v1/pnxs?q=any,contains,Thermodynamics&lang=eng&offset=0&limit=50&view=brief&vid=OSU&scope=OSU_ALMA&apikey=l7xxa6cbb9dff0044642a41f0717b80f0f5b";
 				ExLibrisForm.Browser:Navigate(libraryurl);
                 
 			end
-
-            
-			 		          
+	          
 end
 
 
@@ -100,18 +100,12 @@ function SearchISxN()
        ExLibrisForm.Browser:SetFormValue("searchForm","scp.scps", settings.DefaultScope);
        ExLibrisForm.Browser:ClickObject("goButton");
 
-       --ExLibrisForm.Form:Show();
-       --searchurl = "https://api-na.hosted.exlibrisgroup.com/primo/v1/pnxs?q=any,contains,Thermodynamics&lang=eng&offset=0&limit=50&view=brief&vid=OSU&scope=OSU_ALMA&apikey=l7xxa6cbb9dff0044642a41f0717b80f0f5b";
-       --search = "http://search.library.oregonstate.edu/primo_library/libweb/action/display.do?tabs=viewOnlineTab&ct=display&fn=search&doc=dedupmrg487086521&indx=2&recIds=dedupmrg487086521&recIdxs=1&elementId=1&renderMode=poppedOut&displayMode=full&frbrVersion=&dscnt=0&scp.scps=scope%3A%28OSU%29%2Cscope%3A%28E-OSU%29&frbg=&tab=default_tab&dstmp=1448063367461&srt=rank&mode=Basic&&dum=true&tb=t&showPnx=true&vl(freeText0)=0920-2307&vid=OSU";
-       --ExLibrisForm.Browser:Navigate(search);
-       --test = ExLibrisForm.Browser.WebBrowser.Document:GetElementsByTagName("pre");
-       --interfaceMngr:ShowMessage(test, "test");
-
 	end
 
 function SearchTitle()
 	local Articletitle = nil;
 	local Loantitle = nil;
+
     if GetFieldValue("Transaction", "RequestType") == "Loan" then  
 		if string.find(GetFieldValue ("Transaction", "LoanTitle"),"/",1) ~=nil then
 			Loantitle = string.sub(GetFieldValue ("Transaction", "LoanTitle"),1, string.find(GetFieldValue ("Transaction", "LoanTitle"),"/",1)-1);
@@ -119,7 +113,7 @@ function SearchTitle()
 			Loantitle = GetFieldValue ("Transaction", "LoanTitle");
 		end
 		
-		ExLibrisForm.Browser:SetFormValue("searchForm","search_field", Loantitle);
+		ExLibrisForm.Browser:SetFormValue("searchForm","search_field", FormatTitle(Loantitle));
 	else
 		if string.find(GetFieldValue ("Transaction", "PhotoArticleTitle"),"/",1)~=nil then
 			 Articletitle = string.sub(GetFieldValue ("Transaction", "PhotoArticleTitle"),1, string.find(GetFieldValue ("Transaction", "PhotoArticleTitle"),"/",1)-1);
@@ -127,12 +121,35 @@ function SearchTitle()
 			 Articletitle = GetFieldValue ("Transaction", "PhotoArticleTitle");
 		end
 		
-		ExLibrisForm.Browser:SetFormValue("searchForm","search_field", Articletitle);
+		ExLibrisForm.Browser:SetFormValue("searchForm","search_field", FormatTitle(Articletitle));
 	end
-       ExLibrisForm.Browser:SetFormValue("searchForm","scp.scps", settings.DefaultScope);
-	   ExLibrisForm.Browser:ClickObject("goButton");
+    
+    SetScope();
+    searchExactTitle = false;
+	ExLibrisForm.Browser:ClickObject("goButton");
+    
 end
 
+function SetScope()
+    if searchExactTitle then
+        ExLibrisForm.Browser:SetFormValue("searchForm","scp.scps", "scope:(OSU),scope:(P),scope:(E-OSU),primo_central_multiple_fe");
+    else 
+        ExLibrisForm.Browser:SetFormValue("searchForm","scp.scps", settings.DefaultScope);
+    end
+end
+
+function SearchExactTitle()
+    searchExactTitle = true;
+    SearchTitle();
+end
+
+function FormatTitle(title)
+	if searchExactTitle then
+       return "\"" .. title .. "\"";
+    else
+       return title;   
+    end
+end
 
 function InputLocation()
 	local element =nil;
