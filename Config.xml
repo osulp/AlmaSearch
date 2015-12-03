@@ -13,7 +13,7 @@
     <Setting name="AutoSearch" value="true" type="boolean">
       <Description>Determines whether or not the search should be done automatically when the request is opened.</Description>
     </Setting>
-    <Setting name="StartwithISxN" value="false" type="boolean">
+    <Setting name="StartwithISxN" value="true" type="boolean">
       <Description>Determines whether or not the Addon should start the search with item ISxN.</Description>
     </Setting>
     <Setting name="Popup" value="false" type="boolean">
@@ -22,8 +22,19 @@
     <Setting name="localurl" value="http://search.library.oregonstate.edu" type="string">
       <Description>Enter in your shortened URL for your catalog (e.g. http://search.library.northwestern.edu/).  Include the colon and port number if part of the string.</Description>
     </Setting>
-    <Setting name="AddonRibbonName" value="AlmaPrimoSearch" type="string">
+    <Setting name="AddonRibbonName" value="AlmaPrimoDemo" type="string">
       <Description>Enter the name that you would like to appear for the tab associated with this Addon (example: Alma) (example:Primo)</Description>
+    </Setting>
+    <Setting name="DefaultScope" value="scope:(OSU),scope:(E-OSU)" type="string">
+      <Description>
+        Determines the default scope that the search should pick when the request is opened. Default is set to 'At OSU Libraries only'. Other options available are listed here:
+        For 'Books, media and articles' enter: 'scope:(OSU),scope:(P),scope:(E-OSU),primo_central_multiple_fe',
+        for 'At OSU Libraries only' enter: 'scope:(OSU),scope:(E-OSU)',
+        for 'OSU Libraries + Summit' enter 'scope:(OSU),scope:(P),scope:(E-OSU)',
+        for 'Special Collections and Archives' enter: 'scope:(OSU_SCARC)',
+        for 'Articles' enter: 'primo_central_multiple_fe',
+        and for 'OSU Cascades' enter: 'scope:(OSU_CASCADES)'
+      </Description>
     </Setting>
   </Settings>
   <Files>

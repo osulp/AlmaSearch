@@ -20,6 +20,8 @@ settings.localurl = GetSetting("localurl");
 settings.autoSearch = GetSetting("AutoSearch");
 settings.Popup = GetSetting("Popup");
 settings.AddonRibbonName = GetSetting("AddonRibbonName");
+settings.StartwithISxN = GetSetting("StartwithISxN");
+settings.DefaultScope = GetSetting("DefaultScope");
 local interfaceMngr = nil;
 local ExLibrisForm = {};
 local libraryurl = settings.localurl
@@ -58,6 +60,7 @@ function Init()
 			    else
                    ExLibrisForm.Browser:RegisterPageHandler("formExists", "searchForm", "SearchTitle", false);
 				end
+                --libraryurl = "https://api-na.hosted.exlibrisgroup.com/primo/v1/pnxs?q=any,contains,Thermodynamics&lang=eng&offset=0&limit=50&view=brief&vid=OSU&scope=OSU_ALMA&apikey=l7xxa6cbb9dff0044642a41f0717b80f0f5b";
 				ExLibrisForm.Browser:Navigate(libraryurl);
                 
 			end
@@ -94,6 +97,7 @@ function SearchISxN()
 	else
        interfaceMngr:ShowMessage("ISxN is not available from request form", "Insufficient Information");
 	end
+       ExLibrisForm.Browser:SetFormValue("searchForm","scp.scps", settings.DefaultScope);
        ExLibrisForm.Browser:ClickObject("goButton");
 
        --ExLibrisForm.Form:Show();
@@ -125,7 +129,7 @@ function SearchTitle()
 		
 		ExLibrisForm.Browser:SetFormValue("searchForm","search_field", Articletitle);
 	end
-       ExLibrisForm.Browser:SetFormValue("searchForm","scp.scps", "scope:(OSU),scope:(E-OSU)");
+       ExLibrisForm.Browser:SetFormValue("searchForm","scp.scps", settings.DefaultScope);
 	   ExLibrisForm.Browser:ClickObject("goButton");
 end
 
