@@ -227,11 +227,15 @@ function InputLocation()
 		        if element1:GetAttribute("className")=="EXLAvailabilityCallNumber" then
 			        -- if the className "EXLAvailabilityCollectionName" exists, it is set to a local variable by getting the inner text
 			        local dElement = element1.InnerText;
+                    local tmpStr1 = string.gsub(dElement, "%(", "");
+                    local tmpStr2 = string.gsub(tmpStr1, "%)", "");
+
 			        -- Here the Location field is set to the value of the InnerText of the dElement
-			        SetFieldValue("Transaction", "CallNumber", dElement);
-			        -- if the user has selected to receive popups when importing Call#, they will receive a popup
+			        SetFieldValue("Transaction", "CallNumber", tmpStr2);
+			        
+                    -- if the user has selected to receive popups when importing Call#, they will receive a popup
 			        if settings.Popup then
-			            interfaceMngr:ShowMessage("CallNumber has been set to: " .. dElement, "CallNumber Info Updated for Request");
+			            interfaceMngr:ShowMessage("CallNumber has been set to: " .. tmpStr2, "CallNumber Info Updated for Request");
 			        end  -- for if PopUp						
 			        break  -- stops the loop once the value is found
 		        end  -- for if GetAttribute
