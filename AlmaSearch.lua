@@ -22,7 +22,6 @@ settings.Popup = GetSetting("Popup");
 settings.AddonRibbonName = GetSetting("AddonRibbonName");
 settings.StartwithISxN = GetSetting("StartwithISxN");
 settings.DefaultScope = GetSetting("DefaultScope");
-local searchExactTitle = false;
 local interfaceMngr = nil;
 local ExLibrisForm = {};
 local libraryurl = settings.localurl
@@ -51,7 +50,6 @@ function Init()
 			ExLibrisForm.RibbonPage = ExLibrisForm.Form:GetRibbonPage("ExLibris");
 		    ExLibrisForm.RibbonPage:CreateButton("Search ISxN", GetClientImage("Search32"), "SearchISxN", settings.AddonRibbonName);
 			ExLibrisForm.RibbonPage:CreateButton("Search Title", GetClientImage("Search32"), "SearchTitle", settings.AddonRibbonName);
-            ExLibrisForm.RibbonPage:CreateButton("Search Exact Title", GetClientImage("Search32"), "SearchExactTitle", settings.AddonRibbonName);
 			ExLibrisForm.RibbonPage:CreateButton("Input Location/ Call Number", GetClientImage("Borrowing32"), "InputLocation", "Location Info");
 			
 			ExLibrisForm.Form:Show();
@@ -113,7 +111,7 @@ function SearchTitle()
 			Loantitle = GetFieldValue ("Transaction", "LoanTitle");
 		end
 		
-		ExLibrisForm.Browser:SetFormValue("searchForm","search_field", FormatTitle(Loantitle));
+		ExLibrisForm.Browser:SetFormValue("searchForm","search_field", Loantitle);
 	else
 		if string.find(GetFieldValue ("Transaction", "PhotoArticleTitle"),"/",1)~=nil then
 			 Articletitle = string.sub(GetFieldValue ("Transaction", "PhotoArticleTitle"),1, string.find(GetFieldValue ("Transaction", "PhotoArticleTitle"),"/",1)-1);
@@ -121,35 +119,13 @@ function SearchTitle()
 			 Articletitle = GetFieldValue ("Transaction", "PhotoArticleTitle");
 		end
 		
-		ExLibrisForm.Browser:SetFormValue("searchForm","search_field", FormatTitle(Articletitle));
+		ExLibrisForm.Browser:SetFormValue("searchForm","search_field", Articletitle);
 	end
     
-    SetScope();
-    searchExactTitle = false;
 	ExLibrisForm.Browser:ClickObject("goButton");
     
 end
 
-function SetScope()
-    if searchExactTitle then
-        ExLibrisForm.Browser:SetFormValue("searchForm","scp.scps", "scope:(OSU),scope:(P),scope:(E-OSU),primo_central_multiple_fe");
-    else 
-        ExLibrisForm.Browser:SetFormValue("searchForm","scp.scps", settings.DefaultScope);
-    end
-end
-
-function SearchExactTitle()
-    searchExactTitle = true;
-    SearchTitle();
-end
-
-function FormatTitle(title)
-	if searchExactTitle then
-       return "\"" .. title .. "\"";
-    else
-       return title;   
-    end
-end
 
 function InputLocation()
 	local element =nil;
@@ -200,5 +176,68 @@ function InputLocation()
 				end
 			end
 	end
+
+    --if ExLibrisForm.Browser:GetElementInFrame(nil,"exlidResult0-TabContent")~= nil then
+    if ExLibrisForm.Browser:GetElementInFrame(em,"RTADivTitle_0")~= nil then
+	    -- the line below creates an array of elements that are of <span> type
+        local cElements = ExLibrisForm.Browser.WebBrowser.Document:GetElementsByTagName("span");
+        -- if the array is empty, the function ends
+        if cElements == nil then
+	        return false;
+        end
+        -- the number of items in the array is counted	
+        for i=0, cElements.Count - 1 do
+	        -- the items in the array are indexed and stored in the variable "element1"
+	        element1 = ExLibrisForm.Browser:GetElementByCollectionIndex(cElements, i);
+			    
+	        -- if <span> elements exist in the array, the function continues   
+	        if element1.ParentNode ~= nil then
+		        -- the line below looks through the <span> elements for the className
+		        if element1:GetAttribute("className")=="EXLAvailabilityCollectionName" then
+			        -- if the className "EXLAvailabilityCollectionName" exists, it is set to a local variable by getting the inner text
+			        local dElement = element1.InnerText;
+			        -- Here the Location field is set to the value of the InnerText of the dElement
+			        SetFieldValue("Transaction", "Location", dElement);
+			        -- if the user has selected to receive popups when importing Call#, they will receive a popup
+			        if settings.Popup then
+			            interfaceMngr:ShowMessage("Location has been set to: " .. dElement, "Collection Info Updated for Request");
+			        end  -- for if PopUp						
+			        break  -- stops the loop once the value is found
+		        end  -- for if GetAttribute
+	        end -- for if element1.ParentNode
+        end  -- for loop
+    end -- for if GetElementInFrame
+
+    --if ExLibrisForm.Browser:GetElementInFrame(nil,"exlidResult0-TabContent")~= nil then
+    if ExLibrisForm.Browser:GetElementInFrame(em,"RTADivTitle_0")~= nil then
+	    -- the line below creates an array of elements that are of <span> type
+        local cElements = ExLibrisForm.Browser.WebBrowser.Document:GetElementsByTagName("span");
+        -- if the array is empty, the function ends
+        if cElements == nil then
+	        return false;
+        end
+        -- the number of items in the array is counted	
+        for i=0, cElements.Count - 1 do
+	        -- the items in the array are indexed and stored in the variable "element1"
+	        element1 = ExLibrisForm.Browser:GetElementByCollectionIndex(cElements, i);
+			    
+	        -- if <span> elements exist in the array, the function continues   
+	        if element1.ParentNode ~= nil then
+		        -- the line below looks through the <span> elements for the className
+		        if element1:GetAttribute("className")=="EXLAvailabilityCallNumber" then
+			        -- if the className "EXLAvailabilityCollectionName" exists, it is set to a local variable by getting the inner text
+			        local dElement = element1.InnerText;
+			        -- Here the Location field is set to the value of the InnerText of the dElement
+			        SetFieldValue("Transaction", "CallNumber", dElement);
+			        -- if the user has selected to receive popups when importing Call#, they will receive a popup
+			        if settings.Popup then
+			            interfaceMngr:ShowMessage("CallNumber has been set to: " .. dElement, "CallNumber Info Updated for Request");
+			        end  -- for if PopUp						
+			        break  -- stops the loop once the value is found
+		        end  -- for if GetAttribute
+	        end -- for if element1.ParentNode
+        end  -- for loop
+    end -- for if GetElementInFrame
+
 	ExecuteCommand("SwitchTab", {"Detail"});
 end
