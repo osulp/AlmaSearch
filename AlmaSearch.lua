@@ -59,7 +59,7 @@ function Init()
 				   ExLibrisForm.Browser:RegisterPageHandler("formExists", "searchForm", "SearchISxN", false);
 			    else
 
-                   ExLibrisForm.Browser:RegisterPageHandler("formExists", "searchForm", "SearchTitle", false);
+                   ExLibrisForm.Browser:RegisterPageHandler("formExists", "searchForm", "SearchJournalTitle", false);
 				end
 				ExLibrisForm.Browser:Navigate(libraryurl);
                 
@@ -126,6 +126,31 @@ function SearchTitle()
     
 end
 
+function SearchJournalTitle()
+	local Articletitle = nil;
+	local Loantitle = nil;
+
+    if GetFieldValue("Transaction", "RequestType") == "Loan" then  
+		if string.find(GetFieldValue ("Transaction", "LoanTitle"),"/",1) ~=nil then
+			Loantitle = string.sub(GetFieldValue ("Transaction", "LoanTitle"),1, string.find(GetFieldValue ("Transaction", "LoanTitle"),"/",1)-1);
+		else
+			Loantitle = GetFieldValue ("Transaction", "LoanTitle");
+		end
+		
+		ExLibrisForm.Browser:SetFormValue("searchForm","search_field", Loantitle);
+	else
+		if string.find(GetFieldValue ("Transaction", "PhotoJournalTitle"),"/",1)~=nil then
+			 Articletitle = string.sub(GetFieldValue ("Transaction", "PhotoJournalTitle"),1, string.find(GetFieldValue ("Transaction", "PhotoJournalTitle"),"/",1)-1);
+		else
+			 Articletitle = GetFieldValue ("Transaction", "PhotoJournalTitle");
+		end
+		
+		ExLibrisForm.Browser:SetFormValue("searchForm","search_field", Articletitle);
+	end
+    
+	ExLibrisForm.Browser:ClickObject("goButton");
+    
+end
 
 function InputLocation()
 	local element =nil;
@@ -169,7 +194,7 @@ function InputLocation()
 					    local dElement = string.sub(element1.InnerText, 1, string.find(element1.InnerText,element.InnerText,1)-2);
 			            SetFieldValue("Transaction", "Location", dElement);
 						if settings.Popup == true then
-						interfaceMngr:ShowMessage("Location has been set to: " .. dElement, "Location Info Updated for Request");
+						    interfaceMngr:ShowMessage("Location has been set to: " .. dElement, "Location Info Updated for Request");
 						end
 						break
 					end
@@ -181,67 +206,121 @@ function InputLocation()
     if ExLibrisForm.Browser:GetElementInFrame(em,"RTADivTitle_0")~= nil then
 	    -- the line below creates an array of elements that are of <span> type
         local cElements = ExLibrisForm.Browser.WebBrowser.Document:GetElementsByTagName("span");
+    
         -- if the array is empty, the function ends
         if cElements == nil then
 	        return false;
         end
-        -- the number of items in the array is counted	
-        for i=0, cElements.Count - 1 do
-	        -- the items in the array are indexed and stored in the variable "element1"
-	        element1 = ExLibrisForm.Browser:GetElementByCollectionIndex(cElements, i);
-			    
-	        -- if <span> elements exist in the array, the function continues   
-	        if element1.ParentNode ~= nil then
-		        -- the line below looks through the <span> elements for the className
-		        if element1:GetAttribute("className")=="EXLAvailabilityCollectionName" then
-			        -- if the className "EXLAvailabilityCollectionName" exists, it is set to a local variable by getting the inner text
-			        local dElement = element1.InnerText;
-			        -- Here the Location field is set to the value of the InnerText of the dElement
-			        SetFieldValue("Transaction", "Location", dElement);
-			        -- if the user has selected to receive popups when importing Call#, they will receive a popup
-			        if settings.Popup then
-			            interfaceMngr:ShowMessage("Location has been set to: " .. dElement, "Collection Info Updated for Request");
-			        end  -- for if PopUp						
-			        break  -- stops the loop once the value is found
-		        end  -- for if GetAttribute
-	        end -- for if element1.ParentNode
-        end  -- for loop
-    end -- for if GetElementInFrame
 
-    --if ExLibrisForm.Browser:GetElementInFrame(nil,"exlidResult0-TabContent")~= nil then
-    if ExLibrisForm.Browser:GetElementInFrame(em,"RTADivTitle_0")~= nil then
-	    -- the line below creates an array of elements that are of <span> type
-        local cElements = ExLibrisForm.Browser.WebBrowser.Document:GetElementsByTagName("span");
-        -- if the array is empty, the function ends
-        if cElements == nil then
-	        return false;
+        local collectionName = GetInnerContentFromClass(cElements,"EXLAvailabilityCollectionName");
+        local libraryName = GetInnerContentFromClass(cElements,"EXLAvailabilityLibraryName");
+        local callNumber = GetInnerContentFromClass(cElements,"EXLAvailabilityCallNumber");
+        local sourceType = GetSourceType();
+
+        local collectionFound = IsClassNameFoundInElements(cElements,"EXLAvailabilityCollectionName");
+
+        if collectionFound then
+            location = FormatLocation(libraryName, collectionName);
+
+            local cleanCallNum = CleanupCallNum(callNumber);
+			SetFieldValue("Transaction", "Location", location);
+            SetFieldValue("Transaction", "CallNumber", cleanCallNum);
+			-- if the user has selected to receive popups when importing Call#, they will receive a popup
+			if settings.Popup then
+			    interfaceMngr:ShowMessage("Location has been set to: " .. location, "Collection Info Updated for Request");
+                interfaceMngr:ShowMessage("CallNumber has been set to: " .. cleanCallNum, "CallNumber Info Updated for Request");
+			end  -- for if PopUp						
+        else
+            local location = "";
+            if sourceType == "Online access" then
+                location = sourceType;
+            else
+                location = FormatLocation(libraryName, collectionName);
+            end
+
+            SetFieldValue("Transaction", "Location", location);
+            if settings.Popup then
+			    interfaceMngr:ShowMessage("Location has been set to: " .. location, "Collection Info Updated for Request");
+            end
         end
-        -- the number of items in the array is counted	
-        for i=0, cElements.Count - 1 do
-	        -- the items in the array are indexed and stored in the variable "element1"
-	        element1 = ExLibrisForm.Browser:GetElementByCollectionIndex(cElements, i);
-			    
-	        -- if <span> elements exist in the array, the function continues   
-	        if element1.ParentNode ~= nil then
-		        -- the line below looks through the <span> elements for the className
-		        if element1:GetAttribute("className")=="EXLAvailabilityCallNumber" then
-			        -- if the className "EXLAvailabilityCollectionName" exists, it is set to a local variable by getting the inner text
-			        local dElement = element1.InnerText;
-                    local tmpStr1 = string.gsub(dElement, "%(", "");
-                    local tmpStr2 = string.gsub(tmpStr1, "%)", "");
 
-			        -- Here the Location field is set to the value of the InnerText of the dElement
-			        SetFieldValue("Transaction", "CallNumber", tmpStr2);
-			        
-                    -- if the user has selected to receive popups when importing Call#, they will receive a popup
-			        if settings.Popup then
-			            interfaceMngr:ShowMessage("CallNumber has been set to: " .. tmpStr2, "CallNumber Info Updated for Request");
-			        end  -- for if PopUp						
-			        break  -- stops the loop once the value is found
-		        end  -- for if GetAttribute
-	        end -- for if element1.ParentNode
-        end  -- for loop
     end -- for if GetElementInFrame
 
 	ExecuteCommand("SwitchTab", {"Detail"});
+end
+
+function CleanupCallNum(callNum)
+    local tmpStr1 = string.gsub(callNum, "%(", "");
+    local tmpStr2 = string.gsub(tmpStr1, "%)", "");
+    return tmpStr2;
+end
+
+function trimSpaces(str)
+    --print( string.format( "Leading whitespace removed: %s", str:match( "^%s*(.+)" ) ) )
+    --print( string.format( "Trailing whitespace removed: %s", str:match( "(.-)%s*$" ) ) )
+    --print( string.format( "Leading and trailing whitespace removed: %s", str:match( "^%s*(.-)%s*$" ) ) )
+    return str:match("^%s*(.-)%s*$")
+end
+
+function GetSourceType()
+    local cElements = ExLibrisForm.Browser.WebBrowser.Document:GetElementsByTagName("em");
+    local content = "";
+    --todo: fix this:
+    for i=0, cElements.Count - 1 do
+	    element1 = ExLibrisForm.Browser:GetElementByCollectionIndex(cElements, i);
+			    
+	    if element1.ParentNode ~= nil then
+		    if (element1:GetAttribute("className")=="EXLResultStatusMaybeAvailable") or (element1:GetAttribute("className")=="EXLResultStatusAvailable") then
+                content = trimSpaces(element1.InnerText);
+                break
+		    end
+	    end -- for if element1.ParentNode
+    end  -- for loop
+    --interfaceMngr:ShowMessage("sourcetype=<" .. content .. ">", "debug");
+    return content;
+end
+
+function IsClassNameFoundInElements(cElements,className)
+    local found = false;
+    for i=0, cElements.Count - 1 do	        
+	    element1 = ExLibrisForm.Browser:GetElementByCollectionIndex(cElements, i);
+	    if element1.ParentNode ~= nil then
+		    if element1:GetAttribute("className")==className then
+			    found = true						
+			    break
+		    end
+	    end
+    end
+    return found;
+end
+
+function GetInnerContentFromClass(cElements, className)
+    local content = "";
+
+    -- the number of items in the array is counted	
+    for i=0, cElements.Count - 1 do
+	    -- the items in the array are indexed and stored in the variable "element1"
+	    element1 = ExLibrisForm.Browser:GetElementByCollectionIndex(cElements, i);
+			    
+	    -- if <span> elements exist in the array, the function continues   
+	    if element1.ParentNode ~= nil then
+		    -- the line below looks through the <span> elements for the className
+		    if element1:GetAttribute("className")==className then
+			    -- if the className "EXLAvailabilityCollectionName" exists, it is set to a local variable by getting the inner text
+                content = element1.InnerText;
+                break
+		    end
+	    end -- for if element1.ParentNode
+    end  -- for loop
+    return content;
+end
+
+function FormatLocation(libraryName, collectionName)
+    if libraryName == "McDowell Veterinary Library" then
+        return "Vetmed " .. collectionName;
+    elseif libraryName == "Guin Library-Newport" then
+        return "Guin " .. collectionName;
+    else
+        return collectionName;
+    end
 end

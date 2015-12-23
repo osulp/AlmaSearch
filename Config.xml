@@ -22,7 +22,7 @@
     <Setting name="localurl" value="http://search.library.oregonstate.edu" type="string">
       <Description>Enter in your shortened URL for your catalog (e.g. http://search.library.northwestern.edu/).  Include the colon and port number if part of the string.</Description>
     </Setting>
-    <Setting name="AddonRibbonName" value="AlmaPrimoDemo" type="string">
+    <Setting name="AddonRibbonName" value="AlmaPrimoDev" type="string">
       <Description>Enter the name that you would like to appear for the tab associated with this Addon (example: Alma) (example:Primo)</Description>
     </Setting>
     <Setting name="DefaultScope" value="scope:(OSU),scope:(E-OSU)" type="string">
