@@ -1,0 +1,692 @@
+﻿<XtraSerializer version="1.0" application="LayoutControl">
+  <property name="#LayoutVersion" />
+  <property name="Items" iskey="true" value="13">
+    <property name="Item1" isnull="true" iskey="true">
+      <property name="ExpandButtonMode">Normal</property>
+      <property name="ExpandButtonVisible">false</property>
+      <property name="Padding">0, 0, 0, 0</property>
+      <property name="TextVisible">false</property>
+      <property name="Spacing">0, 0, 0, 0</property>
+      <property name="Size">@4,Width=1008@3,Height=774</property>
+      <property name="Expanded">true</property>
+      <property name="ExpandOnDoubleClick">false</property>
+      <property name="DefaultLayoutType">Vertical</property>
+      <property name="Location">@1,X=0@1,Y=0</property>
+      <property name="ShowTabPageCloseButton">false</property>
+      <property name="OptionsToolTip" isnull="true" iskey="true">
+        <property name="IconToolTipTitle" />
+        <property name="IconToolTipIconType">None</property>
+        <property name="EnableIconToolTip">true</property>
+        <property name="IconToolTip" />
+        <property name="ToolTip" />
+        <property name="ToolTipTitle" />
+        <property name="ToolTipIconType">None</property>
+      </property>
+      <property name="Name">Root</property>
+      <property name="AppearanceItemCaption" isnull="true" iskey="true">
+        <property name="Font">Tahoma, 7.8pt</property>
+        <property name="BackColor2" />
+        <property name="BackColor" />
+        <property name="ForeColor" />
+        <property name="BorderColor" />
+        <property name="GradientMode">Horizontal</property>
+      </property>
+      <property name="OptionsCustomization" isnull="true" iskey="true">
+        <property name="AllowDrop">Default</property>
+        <property name="AllowDrag">Default</property>
+      </property>
+      <property name="AppearanceTabPage" isnull="true" iskey="true">
+        <property name="HeaderHotTracked" isnull="true" iskey="true">
+          <property name="Font">Tahoma, 7.8pt</property>
+          <property name="BackColor2" />
+          <property name="BackColor" />
+          <property name="ForeColor" />
+          <property name="BorderColor" />
+          <property name="GradientMode">Horizontal</property>
+        </property>
+        <property name="PageClient" isnull="true" iskey="true">
+          <property name="Font">Tahoma, 7.8pt</property>
+          <property name="BackColor2" />
+          <property name="BackColor" />
+          <property name="ForeColor" />
+          <property name="BorderColor" />
+          <property name="GradientMode">Horizontal</property>
+        </property>
+        <property name="HeaderDisabled" isnull="true" iskey="true">
+          <property name="Font">Tahoma, 7.8pt</property>
+          <property name="BackColor2" />
+          <property name="BackColor" />
+          <property name="ForeColor" />
+          <property name="BorderColor" />
+          <property name="GradientMode">Horizontal</property>
+        </property>
+        <property name="Header" isnull="true" iskey="true">
+          <property name="Font">Tahoma, 7.8pt</property>
+          <property name="BackColor2" />
+          <property name="BackColor" />
+          <property name="ForeColor" />
+          <property name="BorderColor" />
+          <property name="GradientMode">Horizontal</property>
+        </property>
+        <property name="HeaderActive" isnull="true" iskey="true">
+          <property name="Font">Tahoma, 7.8pt</property>
+          <property name="BackColor2" />
+          <property name="BackColor" />
+          <property name="ForeColor" />
+          <property name="BorderColor" />
+          <property name="GradientMode">Horizontal</property>
+        </property>
+      </property>
+      <property name="TextLocation">Top</property>
+      <property name="ParentName" />
+      <property name="AppearanceGroup" isnull="true" iskey="true">
+        <property name="Font">Tahoma, 7.8pt</property>
+        <property name="BackColor2" />
+        <property name="BackColor" />
+        <property name="ForeColor" />
+        <property name="BorderColor" />
+        <property name="GradientMode">Horizontal</property>
+      </property>
+      <property name="ShowInCustomizationForm">true</property>
+      <property name="CaptionImageIndex">-1</property>
+      <property name="AllowDrawBackground">true</property>
+      <property name="GroupBordersVisible">false</property>
+      <property name="Visibility">Always</property>
+      <property name="EnableIndentsWithoutBorders">True</property>
+      <property name="CaptionImageVisible">true</property>
+      <property name="OptionsItemText" isnull="true" iskey="true">
+        <property name="TextAlignMode">UseParentOptions</property>
+        <property name="TextToControlDistance">3</property>
+      </property>
+      <property name="ExpandButtonLocation">Default</property>
+      <property name="CaptionImageLocation">Default</property>
+      <property name="TypeName">LayoutGroup</property>
+      <property name="Text">Main Group</property>
+      <property name="CustomizationFormText">Main Group</property>
+      <property name="TabbedGroupParentName" />
+      <property name="TextToControlDistance">0</property>
+    </property>
+    <property name="Item2" isnull="true" iskey="true">
+      <property name="MaxSize">@1,Width=0@2,Height=26</property>
+      <property name="ImageToTextDistance">5</property>
+      <property name="Location">@1,X=0@1,Y=0</property>
+      <property name="MinSize">@3,Width=162@2,Height=26</property>
+      <property name="ImageAlignment">MiddleLeft</property>
+      <property name="Image" isnull="true" />
+      <property name="Size">@4,Width=1008@2,Height=26</property>
+      <property name="ImageIndex">-1</property>
+      <property name="ParentName">Root</property>
+      <property name="Padding">2, 2, 2, 2</property>
+      <property name="TextVisible">true</property>
+      <property name="TextSize">@3,Width=105@2,Height=16</property>
+      <property name="AppearanceItemCaption" isnull="true" iskey="true">
+        <property name="Font">Tahoma, 7.8pt</property>
+        <property name="BackColor2" />
+        <property name="BackColor" />
+        <property name="ForeColor" />
+        <property name="BorderColor" />
+        <property name="GradientMode">Horizontal</property>
+      </property>
+      <property name="Name">LoanTitle</property>
+      <property name="OptionsCustomization" isnull="true" iskey="true">
+        <property name="AllowDrop">Default</property>
+        <property name="AllowDrag">Default</property>
+      </property>
+      <property name="Spacing">0, 0, 0, 0</property>
+      <property name="TextToControlDistance">3</property>
+      <property name="TextLocation">Left</property>
+      <property name="ControlName">LoanTitle</property>
+      <property name="AllowHtmlStringInCaption">false</property>
+      <property name="Visibility">Always</property>
+      <property name="TypeName">AtlasSystems.Scripting.UI.AddonControls.TextEdit</property>
+      <property name="OptionsToolTip" isnull="true" iskey="true">
+        <property name="IconToolTipTitle" />
+        <property name="IconToolTipIconType">None</property>
+        <property name="EnableIconToolTip">true</property>
+        <property name="IconToolTip" />
+        <property name="ToolTip" />
+        <property name="ToolTipTitle" />
+        <property name="ToolTipIconType">None</property>
+      </property>
+      <property name="CustomizationFormText">LoanTitle</property>
+      <property name="ShowInCustomizationForm">true</property>
+      <property name="SizeConstraintsType">Default</property>
+      <property name="Text">Loan Title</property>
+      <property name="TextAlignMode">UseParentOptions</property>
+    </property>
+    <property name="Item3" isnull="true" iskey="true">
+      <property name="MaxSize">@1,Width=0@2,Height=26</property>
+      <property name="ImageToTextDistance">5</property>
+      <property name="Location">@1,X=0@2,Y=26</property>
+      <property name="MinSize">@3,Width=162@2,Height=26</property>
+      <property name="ImageAlignment">MiddleLeft</property>
+      <property name="Image" isnull="true" />
+      <property name="Size">@4,Width=1008@2,Height=26</property>
+      <property name="ImageIndex">-1</property>
+      <property name="ParentName">Root</property>
+      <property name="Padding">2, 2, 2, 2</property>
+      <property name="TextVisible">true</property>
+      <property name="TextSize">@3,Width=105@2,Height=16</property>
+      <property name="AppearanceItemCaption" isnull="true" iskey="true">
+        <property name="Font">Tahoma, 7.8pt</property>
+        <property name="BackColor2" />
+        <property name="BackColor" />
+        <property name="ForeColor" />
+        <property name="BorderColor" />
+        <property name="GradientMode">Horizontal</property>
+      </property>
+      <property name="Name">LoanAuthor</property>
+      <property name="OptionsCustomization" isnull="true" iskey="true">
+        <property name="AllowDrop">Default</property>
+        <property name="AllowDrag">Default</property>
+      </property>
+      <property name="Spacing">0, 0, 0, 0</property>
+      <property name="TextToControlDistance">3</property>
+      <property name="TextLocation">Left</property>
+      <property name="ControlName">LoanAuthor</property>
+      <property name="AllowHtmlStringInCaption">false</property>
+      <property name="Visibility">Always</property>
+      <property name="TypeName">AtlasSystems.Scripting.UI.AddonControls.TextEdit</property>
+      <property name="OptionsToolTip" isnull="true" iskey="true">
+        <property name="IconToolTipTitle" />
+        <property name="IconToolTipIconType">None</property>
+        <property name="EnableIconToolTip">true</property>
+        <property name="IconToolTip" />
+        <property name="ToolTip" />
+        <property name="ToolTipTitle" />
+        <property name="ToolTipIconType">None</property>
+      </property>
+      <property name="CustomizationFormText">LoanAuthor</property>
+      <property name="ShowInCustomizationForm">true</property>
+      <property name="SizeConstraintsType">Default</property>
+      <property name="Text">Loan Author</property>
+      <property name="TextAlignMode">UseParentOptions</property>
+    </property>
+    <property name="Item4" isnull="true" iskey="true">
+      <property name="MaxSize">@1,Width=0@2,Height=26</property>
+      <property name="ImageToTextDistance">5</property>
+      <property name="Location">@1,X=0@2,Y=52</property>
+      <property name="MinSize">@3,Width=162@2,Height=26</property>
+      <property name="ImageAlignment">MiddleLeft</property>
+      <property name="Image" isnull="true" />
+      <property name="Size">@4,Width=1008@2,Height=26</property>
+      <property name="ImageIndex">-1</property>
+      <property name="ParentName">Root</property>
+      <property name="Padding">2, 2, 2, 2</property>
+      <property name="TextVisible">true</property>
+      <property name="TextSize">@3,Width=105@2,Height=16</property>
+      <property name="AppearanceItemCaption" isnull="true" iskey="true">
+        <property name="Font">Tahoma, 7.8pt</property>
+        <property name="BackColor2" />
+        <property name="BackColor" />
+        <property name="ForeColor" />
+        <property name="BorderColor" />
+        <property name="GradientMode">Horizontal</property>
+      </property>
+      <property name="Name">LoanPublisher</property>
+      <property name="OptionsCustomization" isnull="true" iskey="true">
+        <property name="AllowDrop">Default</property>
+        <property name="AllowDrag">Default</property>
+      </property>
+      <property name="Spacing">0, 0, 0, 0</property>
+      <property name="TextToControlDistance">3</property>
+      <property name="TextLocation">Left</property>
+      <property name="ControlName">LoanPublisher</property>
+      <property name="AllowHtmlStringInCaption">false</property>
+      <property name="Visibility">Always</property>
+      <property name="TypeName">AtlasSystems.Scripting.UI.AddonControls.TextEdit</property>
+      <property name="OptionsToolTip" isnull="true" iskey="true">
+        <property name="IconToolTipTitle" />
+        <property name="IconToolTipIconType">None</property>
+        <property name="EnableIconToolTip">true</property>
+        <property name="IconToolTip" />
+        <property name="ToolTip" />
+        <property name="ToolTipTitle" />
+        <property name="ToolTipIconType">None</property>
+      </property>
+      <property name="CustomizationFormText">LoanPublisher</property>
+      <property name="ShowInCustomizationForm">true</property>
+      <property name="SizeConstraintsType">Default</property>
+      <property name="Text">Loan Publisher</property>
+      <property name="TextAlignMode">UseParentOptions</property>
+    </property>
+    <property name="Item5" isnull="true" iskey="true">
+      <property name="MaxSize">@1,Width=0@2,Height=26</property>
+      <property name="ImageToTextDistance">5</property>
+      <property name="Location">@1,X=0@2,Y=78</property>
+      <property name="MinSize">@3,Width=162@2,Height=26</property>
+      <property name="ImageAlignment">MiddleLeft</property>
+      <property name="Image" isnull="true" />
+      <property name="Size">@4,Width=1008@2,Height=26</property>
+      <property name="ImageIndex">-1</property>
+      <property name="ParentName">Root</property>
+      <property name="Padding">2, 2, 2, 2</property>
+      <property name="TextVisible">true</property>
+      <property name="TextSize">@3,Width=105@2,Height=16</property>
+      <property name="AppearanceItemCaption" isnull="true" iskey="true">
+        <property name="Font">Tahoma, 7.8pt</property>
+        <property name="BackColor2" />
+        <property name="BackColor" />
+        <property name="ForeColor" />
+        <property name="BorderColor" />
+        <property name="GradientMode">Horizontal</property>
+      </property>
+      <property name="Name">JuornalTitle</property>
+      <property name="OptionsCustomization" isnull="true" iskey="true">
+        <property name="AllowDrop">Default</property>
+        <property name="AllowDrag">Default</property>
+      </property>
+      <property name="Spacing">0, 0, 0, 0</property>
+      <property name="TextToControlDistance">3</property>
+      <property name="TextLocation">Left</property>
+      <property name="ControlName">JuornalTitle</property>
+      <property name="AllowHtmlStringInCaption">false</property>
+      <property name="Visibility">Always</property>
+      <property name="TypeName">AtlasSystems.Scripting.UI.AddonControls.TextEdit</property>
+      <property name="OptionsToolTip" isnull="true" iskey="true">
+        <property name="IconToolTipTitle" />
+        <property name="IconToolTipIconType">None</property>
+        <property name="EnableIconToolTip">true</property>
+        <property name="IconToolTip" />
+        <property name="ToolTip" />
+        <property name="ToolTipTitle" />
+        <property name="ToolTipIconType">None</property>
+      </property>
+      <property name="CustomizationFormText">JuornalTitle</property>
+      <property name="ShowInCustomizationForm">true</property>
+      <property name="SizeConstraintsType">Default</property>
+      <property name="Text">Journal Title</property>
+      <property name="TextAlignMode">UseParentOptions</property>
+    </property>
+    <property name="Item6" isnull="true" iskey="true">
+      <property name="MaxSize">@1,Width=0@2,Height=26</property>
+      <property name="ImageToTextDistance">5</property>
+      <property name="Location">@1,X=0@3,Y=104</property>
+      <property name="MinSize">@3,Width=162@2,Height=26</property>
+      <property name="ImageAlignment">MiddleLeft</property>
+      <property name="Image" isnull="true" />
+      <property name="Size">@4,Width=1008@2,Height=26</property>
+      <property name="ImageIndex">-1</property>
+      <property name="ParentName">Root</property>
+      <property name="Padding">2, 2, 2, 2</property>
+      <property name="TextVisible">true</property>
+      <property name="TextSize">@3,Width=105@2,Height=16</property>
+      <property name="AppearanceItemCaption" isnull="true" iskey="true">
+        <property name="Font">Tahoma, 7.8pt</property>
+        <property name="BackColor2" />
+        <property name="BackColor" />
+        <property name="ForeColor" />
+        <property name="BorderColor" />
+        <property name="GradientMode">Horizontal</property>
+      </property>
+      <property name="Name">ArticleAuthor</property>
+      <property name="OptionsCustomization" isnull="true" iskey="true">
+        <property name="AllowDrop">Default</property>
+        <property name="AllowDrag">Default</property>
+      </property>
+      <property name="Spacing">0, 0, 0, 0</property>
+      <property name="TextToControlDistance">3</property>
+      <property name="TextLocation">Left</property>
+      <property name="ControlName">ArticleAuthor</property>
+      <property name="AllowHtmlStringInCaption">false</property>
+      <property name="Visibility">Always</property>
+      <property name="TypeName">AtlasSystems.Scripting.UI.AddonControls.TextEdit</property>
+      <property name="OptionsToolTip" isnull="true" iskey="true">
+        <property name="IconToolTipTitle" />
+        <property name="IconToolTipIconType">None</property>
+        <property name="EnableIconToolTip">true</property>
+        <property name="IconToolTip" />
+        <property name="ToolTip" />
+        <property name="ToolTipTitle" />
+        <property name="ToolTipIconType">None</property>
+      </property>
+      <property name="CustomizationFormText">ArticleAuthor</property>
+      <property name="ShowInCustomizationForm">true</property>
+      <property name="SizeConstraintsType">Default</property>
+      <property name="Text">Article Author</property>
+      <property name="TextAlignMode">UseParentOptions</property>
+    </property>
+    <property name="Item7" isnull="true" iskey="true">
+      <property name="MaxSize">@1,Width=0@2,Height=26</property>
+      <property name="ImageToTextDistance">5</property>
+      <property name="Location">@1,X=0@3,Y=130</property>
+      <property name="MinSize">@3,Width=162@2,Height=26</property>
+      <property name="ImageAlignment">MiddleLeft</property>
+      <property name="Image" isnull="true" />
+      <property name="Size">@4,Width=1008@2,Height=26</property>
+      <property name="ImageIndex">-1</property>
+      <property name="ParentName">Root</property>
+      <property name="Padding">2, 2, 2, 2</property>
+      <property name="TextVisible">true</property>
+      <property name="TextSize">@3,Width=105@2,Height=16</property>
+      <property name="AppearanceItemCaption" isnull="true" iskey="true">
+        <property name="Font">Tahoma, 7.8pt</property>
+        <property name="BackColor2" />
+        <property name="BackColor" />
+        <property name="ForeColor" />
+        <property name="BorderColor" />
+        <property name="GradientMode">Horizontal</property>
+      </property>
+      <property name="Name">ArticleTitle</property>
+      <property name="OptionsCustomization" isnull="true" iskey="true">
+        <property name="AllowDrop">Default</property>
+        <property name="AllowDrag">Default</property>
+      </property>
+      <property name="Spacing">0, 0, 0, 0</property>
+      <property name="TextToControlDistance">3</property>
+      <property name="TextLocation">Left</property>
+      <property name="ControlName">ArticleTitle</property>
+      <property name="AllowHtmlStringInCaption">false</property>
+      <property name="Visibility">Always</property>
+      <property name="TypeName">AtlasSystems.Scripting.UI.AddonControls.TextEdit</property>
+      <property name="OptionsToolTip" isnull="true" iskey="true">
+        <property name="IconToolTipTitle" />
+        <property name="IconToolTipIconType">None</property>
+        <property name="EnableIconToolTip">true</property>
+        <property name="IconToolTip" />
+        <property name="ToolTip" />
+        <property name="ToolTipTitle" />
+        <property name="ToolTipIconType">None</property>
+      </property>
+      <property name="CustomizationFormText">ArticleTitle</property>
+      <property name="ShowInCustomizationForm">true</property>
+      <property name="SizeConstraintsType">Default</property>
+      <property name="Text">Article Title</property>
+      <property name="TextAlignMode">UseParentOptions</property>
+    </property>
+    <property name="Item8" isnull="true" iskey="true">
+      <property name="MaxSize">@1,Width=0@2,Height=26</property>
+      <property name="ImageToTextDistance">5</property>
+      <property name="Location">@1,X=0@3,Y=156</property>
+      <property name="MinSize">@3,Width=162@2,Height=26</property>
+      <property name="ImageAlignment">MiddleLeft</property>
+      <property name="Image" isnull="true" />
+      <property name="Size">@3,Width=402@2,Height=26</property>
+      <property name="ImageIndex">-1</property>
+      <property name="ParentName">Root</property>
+      <property name="Padding">2, 2, 2, 2</property>
+      <property name="TextVisible">true</property>
+      <property name="TextSize">@3,Width=105@2,Height=16</property>
+      <property name="AppearanceItemCaption" isnull="true" iskey="true">
+        <property name="Font">Tahoma, 7.8pt</property>
+        <property name="BackColor2" />
+        <property name="BackColor" />
+        <property name="ForeColor" />
+        <property name="BorderColor" />
+        <property name="GradientMode">Horizontal</property>
+      </property>
+      <property name="Name">Volume</property>
+      <property name="OptionsCustomization" isnull="true" iskey="true">
+        <property name="AllowDrop">Default</property>
+        <property name="AllowDrag">Default</property>
+      </property>
+      <property name="Spacing">0, 0, 0, 0</property>
+      <property name="TextToControlDistance">3</property>
+      <property name="TextLocation">Left</property>
+      <property name="ControlName">Volume</property>
+      <property name="AllowHtmlStringInCaption">false</property>
+      <property name="Visibility">Always</property>
+      <property name="TypeName">AtlasSystems.Scripting.UI.AddonControls.TextEdit</property>
+      <property name="OptionsToolTip" isnull="true" iskey="true">
+        <property name="IconToolTipTitle" />
+        <property name="IconToolTipIconType">None</property>
+        <property name="EnableIconToolTip">true</property>
+        <property name="IconToolTip" />
+        <property name="ToolTip" />
+        <property name="ToolTipTitle" />
+        <property name="ToolTipIconType">None</property>
+      </property>
+      <property name="CustomizationFormText">Volume</property>
+      <property name="ShowInCustomizationForm">true</property>
+      <property name="SizeConstraintsType">Default</property>
+      <property name="Text">Volume/Issue</property>
+      <property name="TextAlignMode">UseParentOptions</property>
+    </property>
+    <property name="Item9" isnull="true" iskey="true">
+      <property name="MaxSize">@1,Width=0@2,Height=26</property>
+      <property name="ImageToTextDistance">5</property>
+      <property name="Location">@1,X=0@3,Y=182</property>
+      <property name="MinSize">@3,Width=162@2,Height=26</property>
+      <property name="ImageAlignment">MiddleLeft</property>
+      <property name="Image" isnull="true" />
+      <property name="Size">@3,Width=402@2,Height=26</property>
+      <property name="ImageIndex">-1</property>
+      <property name="ParentName">Root</property>
+      <property name="Padding">2, 2, 2, 2</property>
+      <property name="TextVisible">true</property>
+      <property name="TextSize">@3,Width=105@2,Height=16</property>
+      <property name="AppearanceItemCaption" isnull="true" iskey="true">
+        <property name="Font">Tahoma, 7.8pt</property>
+        <property name="BackColor2" />
+        <property name="BackColor" />
+        <property name="ForeColor" />
+        <property name="BorderColor" />
+        <property name="GradientMode">Horizontal</property>
+      </property>
+      <property name="Name">Month</property>
+      <property name="OptionsCustomization" isnull="true" iskey="true">
+        <property name="AllowDrop">Default</property>
+        <property name="AllowDrag">Default</property>
+      </property>
+      <property name="Spacing">0, 0, 0, 0</property>
+      <property name="TextToControlDistance">3</property>
+      <property name="TextLocation">Left</property>
+      <property name="ControlName">Month</property>
+      <property name="AllowHtmlStringInCaption">false</property>
+      <property name="Visibility">Always</property>
+      <property name="TypeName">AtlasSystems.Scripting.UI.AddonControls.TextEdit</property>
+      <property name="OptionsToolTip" isnull="true" iskey="true">
+        <property name="IconToolTipTitle" />
+        <property name="IconToolTipIconType">None</property>
+        <property name="EnableIconToolTip">true</property>
+        <property name="IconToolTip" />
+        <property name="ToolTip" />
+        <property name="ToolTipTitle" />
+        <property name="ToolTipIconType">None</property>
+      </property>
+      <property name="CustomizationFormText">Month</property>
+      <property name="ShowInCustomizationForm">true</property>
+      <property name="SizeConstraintsType">Default</property>
+      <property name="Text">Month/Year/Pages</property>
+      <property name="TextAlignMode">UseParentOptions</property>
+    </property>
+    <property name="Item10" isnull="true" iskey="true">
+      <property name="Location">@1,X=0@3,Y=208</property>
+      <property name="Size">@4,Width=1008@3,Height=566</property>
+      <property name="OptionsToolTip" isnull="true" iskey="true">
+        <property name="IconToolTipTitle" />
+        <property name="IconToolTipIconType">None</property>
+        <property name="EnableIconToolTip">true</property>
+        <property name="IconToolTip" />
+        <property name="ToolTip" />
+        <property name="ToolTipTitle" />
+        <property name="ToolTipIconType">None</property>
+      </property>
+      <property name="OptionsCustomization" isnull="true" iskey="true">
+        <property name="AllowDrop">Default</property>
+        <property name="AllowDrag">Default</property>
+      </property>
+      <property name="MinSize">@3,Width=104@2,Height=24</property>
+      <property name="ImageAlignment">MiddleLeft</property>
+      <property name="ImageIndex">-1</property>
+      <property name="MaxSize">@1,Width=0@1,Height=0</property>
+      <property name="TextVisible">false</property>
+      <property name="ParentName">Root</property>
+      <property name="Spacing">0, 0, 0, 0</property>
+      <property name="TextSize">@1,Width=0@1,Height=0</property>
+      <property name="TextToControlDistance">0</property>
+      <property name="Padding">2, 2, 2, 2</property>
+      <property name="AppearanceItemCaption" isnull="true" iskey="true">
+        <property name="Font">Tahoma, 7.8pt</property>
+        <property name="BackColor2" />
+        <property name="BackColor" />
+        <property name="ForeColor" />
+        <property name="BorderColor" />
+        <property name="GradientMode">Horizontal</property>
+      </property>
+      <property name="Name">ExLibris</property>
+      <property name="ShowInCustomizationForm">true</property>
+      <property name="ControlName">ExLibris</property>
+      <property name="AllowHtmlStringInCaption">false</property>
+      <property name="TextAlignMode">CustomSize</property>
+      <property name="Visibility">Always</property>
+      <property name="ImageToTextDistance">5</property>
+      <property name="TypeName">AtlasSystems.Scripting.UI.AddonControls.Browser</property>
+      <property name="TextLocation">Left</property>
+      <property name="Image" isnull="true" />
+      <property name="SizeConstraintsType">Default</property>
+      <property name="CustomizationFormText">ExLibris</property>
+      <property name="Text">ExLibris</property>
+    </property>
+    <property name="Item11" isnull="true" iskey="true">
+      <property name="MaxSize">@1,Width=0@2,Height=26</property>
+      <property name="ImageToTextDistance">5</property>
+      <property name="Location">@3,X=402@3,Y=156</property>
+      <property name="MinSize">@2,Width=54@2,Height=26</property>
+      <property name="ImageAlignment">MiddleLeft</property>
+      <property name="Image" isnull="true" />
+      <property name="Size">@3,Width=606@2,Height=26</property>
+      <property name="ImageIndex">-1</property>
+      <property name="ParentName">Root</property>
+      <property name="Padding">2, 2, 2, 2</property>
+      <property name="TextVisible">false</property>
+      <property name="TextSize">@1,Width=0@1,Height=0</property>
+      <property name="AppearanceItemCaption" isnull="true" iskey="true">
+        <property name="Font">Tahoma, 7.8pt</property>
+        <property name="BackColor2" />
+        <property name="BackColor" />
+        <property name="ForeColor" />
+        <property name="BorderColor" />
+        <property name="GradientMode">Horizontal</property>
+      </property>
+      <property name="Name">Issue</property>
+      <property name="OptionsCustomization" isnull="true" iskey="true">
+        <property name="AllowDrop">Default</property>
+        <property name="AllowDrag">Default</property>
+      </property>
+      <property name="Spacing">0, 0, 0, 0</property>
+      <property name="TextToControlDistance">0</property>
+      <property name="TextLocation">Left</property>
+      <property name="ControlName">Issue</property>
+      <property name="AllowHtmlStringInCaption">false</property>
+      <property name="Visibility">Always</property>
+      <property name="TypeName">AtlasSystems.Scripting.UI.AddonControls.TextEdit</property>
+      <property name="OptionsToolTip" isnull="true" iskey="true">
+        <property name="IconToolTipTitle" />
+        <property name="IconToolTipIconType">None</property>
+        <property name="EnableIconToolTip">true</property>
+        <property name="IconToolTip" />
+        <property name="ToolTip" />
+        <property name="ToolTipTitle" />
+        <property name="ToolTipIconType">None</property>
+      </property>
+      <property name="CustomizationFormText">Issue</property>
+      <property name="ShowInCustomizationForm">true</property>
+      <property name="SizeConstraintsType">Default</property>
+      <property name="Text">Issue</property>
+      <property name="TextAlignMode">CustomSize</property>
+    </property>
+    <property name="Item12" isnull="true" iskey="true">
+      <property name="MaxSize">@1,Width=0@2,Height=26</property>
+      <property name="ImageToTextDistance">5</property>
+      <property name="Location">@3,X=402@3,Y=182</property>
+      <property name="MinSize">@2,Width=54@2,Height=26</property>
+      <property name="ImageAlignment">MiddleLeft</property>
+      <property name="Image" isnull="true" />
+      <property name="Size">@3,Width=304@2,Height=26</property>
+      <property name="ImageIndex">-1</property>
+      <property name="ParentName">Root</property>
+      <property name="Padding">2, 2, 2, 2</property>
+      <property name="TextVisible">false</property>
+      <property name="TextSize">@1,Width=0@1,Height=0</property>
+      <property name="AppearanceItemCaption" isnull="true" iskey="true">
+        <property name="Font">Tahoma, 7.8pt</property>
+        <property name="BackColor2" />
+        <property name="BackColor" />
+        <property name="ForeColor" />
+        <property name="BorderColor" />
+        <property name="GradientMode">Horizontal</property>
+      </property>
+      <property name="Name">Year</property>
+      <property name="OptionsCustomization" isnull="true" iskey="true">
+        <property name="AllowDrop">Default</property>
+        <property name="AllowDrag">Default</property>
+      </property>
+      <property name="Spacing">0, 0, 0, 0</property>
+      <property name="TextToControlDistance">0</property>
+      <property name="TextLocation">Left</property>
+      <property name="ControlName">Year</property>
+      <property name="AllowHtmlStringInCaption">false</property>
+      <property name="Visibility">Always</property>
+      <property name="TypeName">AtlasSystems.Scripting.UI.AddonControls.TextEdit</property>
+      <property name="OptionsToolTip" isnull="true" iskey="true">
+        <property name="IconToolTipTitle" />
+        <property name="IconToolTipIconType">None</property>
+        <property name="EnableIconToolTip">true</property>
+        <property name="IconToolTip" />
+        <property name="ToolTip" />
+        <property name="ToolTipTitle" />
+        <property name="ToolTipIconType">None</property>
+      </property>
+      <property name="CustomizationFormText">Year</property>
+      <property name="ShowInCustomizationForm">true</property>
+      <property name="SizeConstraintsType">Default</property>
+      <property name="Text">Year</property>
+      <property name="TextAlignMode">CustomSize</property>
+    </property>
+    <property name="Item13" isnull="true" iskey="true">
+      <property name="MaxSize">@1,Width=0@2,Height=26</property>
+      <property name="ImageToTextDistance">5</property>
+      <property name="Location">@3,X=706@3,Y=182</property>
+      <property name="MinSize">@2,Width=54@2,Height=26</property>
+      <property name="ImageAlignment">MiddleLeft</property>
+      <property name="Image" isnull="true" />
+      <property name="Size">@3,Width=302@2,Height=26</property>
+      <property name="ImageIndex">-1</property>
+      <property name="ParentName">Root</property>
+      <property name="Padding">2, 2, 2, 2</property>
+      <property name="TextVisible">false</property>
+      <property name="TextSize">@1,Width=0@1,Height=0</property>
+      <property name="AppearanceItemCaption" isnull="true" iskey="true">
+        <property name="Font">Tahoma, 7.8pt</property>
+        <property name="BackColor2" />
+        <property name="BackColor" />
+        <property name="ForeColor" />
+        <property name="BorderColor" />
+        <property name="GradientMode">Horizontal</property>
+      </property>
+      <property name="Name">Pages</property>
+      <property name="OptionsCustomization" isnull="true" iskey="true">
+        <property name="AllowDrop">Default</property>
+        <property name="AllowDrag">Default</property>
+      </property>
+      <property name="Spacing">0, 0, 0, 0</property>
+      <property name="TextToControlDistance">0</property>
+      <property name="TextLocation">Left</property>
+      <property name="ControlName">Pages</property>
+      <property name="AllowHtmlStringInCaption">false</property>
+      <property name="Visibility">Always</property>
+      <property name="TypeName">AtlasSystems.Scripting.UI.AddonControls.TextEdit</property>
+      <property name="OptionsToolTip" isnull="true" iskey="true">
+        <property name="IconToolTipTitle" />
+        <property name="IconToolTipIconType">None</property>
+        <property name="EnableIconToolTip">true</property>
+        <property name="IconToolTip" />
+        <property name="ToolTip" />
+        <property name="ToolTipTitle" />
+        <property name="ToolTipIconType">None</property>
+      </property>
+      <property name="CustomizationFormText">Pages</property>
+      <property name="ShowInCustomizationForm">true</property>
+      <property name="SizeConstraintsType">Default</property>
+      <property name="Text">Pages</property>
+      <property name="TextAlignMode">CustomSize</property>
+    </property>
+  </property>
+  <property name="LookAndFeel" isnull="true" iskey="true">
+    <property name="UseDefaultLookAndFeel">true</property>
+    <property name="UseWindowsXPTheme">false</property>
+    <property name="SkinName">DevExpress Style</property>
+    <property name="Style">Skin</property>
+  </property>
+</XtraSerializer>

@@ -25,10 +25,22 @@ settings.DefaultScope = GetSetting("DefaultScope");
 local interfaceMngr = nil;
 local ExLibrisForm = {};
 local libraryurl = settings.localurl
+local CitationVisibility = true;
 ExLibrisForm.Form = nil;
 ExLibrisForm.Browser = nil;
 ExLibrisForm.RibbonPage = nil;
 
+ExLibrisForm.ReqLoanTitle = nil;
+ExLibrisForm.ReqLoanAuthor = nil;
+ExLibrisForm.ReqLoanPublisher = nil;
+ExLibrisForm.ReqJournalTitle = nil;
+ExLibrisForm.ReqArticleTitle = nil;
+ExLibrisForm.ReqArticleAuthor = nil;
+ExLibrisForm.ReqVol = nil;
+ExLibrisForm.ReqIssue = nil;
+ExLibrisForm.ReqMonth = nil;
+ExLibrisForm.ReqYear = nil;
+ExLibrisForm.ReqPages = nil;
 
 
 function Init()
@@ -38,8 +50,66 @@ function Init()
 			
 			-- Create browser
 			ExLibrisForm.Form = interfaceMngr:CreateForm(settings.AddonRibbonName, "Script");
-			ExLibrisForm.Browser = ExLibrisForm.Form:CreateBrowser("ExLibris", "ExLibris", "ExLibris");
-			
+            --ExLibrisForm.RequestStatus = ExLibrisForm.Form:CreateListBox("Details", "Details"):AddItem("test");	
+            
+            if GetFieldValue("Transaction", "RequestType") == "Loan" then
+                ExLibrisForm.ReqLoanTitle = ExLibrisForm.Form:CreateTextEdit("LoanTitle", "Loan Title");
+                ExLibrisForm.ReqLoanTitle.Value = GetFieldValue("Transaction", "LoanTitle");
+                ExLibrisForm.ReqLoanTitle.ReadOnly = true;
+            
+                ExLibrisForm.ReqLoanAuthor = ExLibrisForm.Form:CreateTextEdit("LoanAuthor", "Loan Author");
+                ExLibrisForm.ReqLoanAuthor.Value =  GetFieldValue ("Transaction", "LoanAuthor");
+                ExLibrisForm.ReqLoanAuthor.ReadOnly = true;
+            
+                ExLibrisForm.ReqLoanPublisher = ExLibrisForm.Form:CreateTextEdit("LoanPublisher", "Loan Publisher");
+                ExLibrisForm.ReqLoanPublisher.Value = GetFieldValue ("Transaction", "LoanPublisher");
+                ExLibrisForm.ReqLoanPublisher.ReadOnly = true;
+            
+            else
+                ExLibrisForm.ReqJournalTitle = ExLibrisForm.Form:CreateTextEdit("JuornalTitle", "Journal Title");
+                ExLibrisForm.ReqJournalTitle.Value = GetFieldValue("Transaction", "PhotoJournalTitle");
+                ExLibrisForm.ReqJournalTitle.ReadOnly = true;
+            
+                ExLibrisForm.ReqArticleAuthor = ExLibrisForm.Form:CreateTextEdit("ArticleAuthor", "Article Author");
+                ExLibrisForm.ReqArticleAuthor.Value = GetFieldValue("Transaction", "PhotoArticleAuthor");
+                ExLibrisForm.ReqArticleAuthor.ReadOnly = true;
+
+                ExLibrisForm.ReqArticleTitle = ExLibrisForm.Form:CreateTextEdit("ArticleTitle", "Article Title");
+                ExLibrisForm.ReqArticleTitle.Value = GetFieldValue("Transaction", "PhotoArticleTitle");
+                ExLibrisForm.ReqArticleTitle.ReadOnly = true;
+            
+                ExLibrisForm.ReqVol = ExLibrisForm.Form:CreateTextEdit("Volume", "Volume/Issue");
+                ExLibrisForm.ReqVol.Value = GetFieldValue ("Transaction", "PhotoJournalVolume");
+                ExLibrisForm.ReqVol.ReadOnly = true;
+
+                ExLibrisForm.ReqIssue = ExLibrisForm.Form:CreateTextEdit("Issue", "Issue");
+                ExLibrisForm.ReqIssue.Value = GetFieldValue ("Transaction", "PhotoJournalIssue") ;
+                ExLibrisForm.ReqIssue.LabelVisible = false;
+                ExLibrisForm.ReqIssue.ReadOnly = true;
+            
+                ExLibrisForm.ReqMonth = ExLibrisForm.Form:CreateTextEdit("Month", "Month/Year/Pages");
+                ExLibrisForm.ReqMonth.Value = GetFieldValue ("Transaction", "PhotoJournalMonth");
+                ExLibrisForm.ReqMonth.ReadOnly = true;
+
+                ExLibrisForm.ReqYear = ExLibrisForm.Form:CreateTextEdit("Year", "Year");
+                ExLibrisForm.ReqYear.Value = GetFieldValue ("Transaction", "PhotoJournalYear");
+                ExLibrisForm.ReqYear.LabelVisible = false;
+                ExLibrisForm.ReqYear.ReadOnly = true;
+
+                ExLibrisForm.ReqPages = ExLibrisForm.Form:CreateTextEdit("Pages", "Pages");
+                ExLibrisForm.ReqPages.Value = GetFieldValue ("Transaction", "PhotoJournalInclusivePages") ;
+                ExLibrisForm.ReqPages.LabelVisible = false;
+                ExLibrisForm.ReqPages.ReadOnly = true;
+            
+            end
+
+
+            --ExLibrisForm.RequestStatus.LabelVisible = false;
+            
+
+            ExLibrisForm.Browser = ExLibrisForm.Form:CreateBrowser("ExLibris", "ExLibris", "ExLibris");
+
+		    --ExLibrisForm.RequestStatusBox.TextVisible = false;
 			-- Hide the text label
 			ExLibrisForm.Browser.TextVisible = false;
 			
@@ -50,12 +120,25 @@ function Init()
 			ExLibrisForm.RibbonPage = ExLibrisForm.Form:GetRibbonPage("ExLibris");
 		    ExLibrisForm.RibbonPage:CreateButton("Search ISxN", GetClientImage("Search32"), "SearchISxN", settings.AddonRibbonName);
 			ExLibrisForm.RibbonPage:CreateButton("Search Title", GetClientImage("Search32"), "SearchTitle", settings.AddonRibbonName);
+            ExLibrisForm.RibbonPage:CreateButton("Show/Hide Details", GetClientImage("DocumentDelivery32"), "ShowHideDetails", settings.AddonRibbonName);
+
 			ExLibrisForm.RibbonPage:CreateButton("Input Location/ Call Number", GetClientImage("Borrowing32"), "InputLocation", "Location Info");
-			
+
+            --ExLibrisForm.RibbonPage:CreateForm("Details","Details");
+            --ExLibrisForm.Form:LoadLayout(AddonInfo.Directory .. "\\layout-default.xml");
+            if GetFieldValue("Transaction", "RequestType") == "Loan" then
+                ExLibrisForm.Form:LoadLayout(AddonInfo.Directory .. "\\layout-loan-default.xml");
+            else
+                ExLibrisForm.Form:LoadLayout(AddonInfo.Directory .. "\\layout-article-default.xml");
+            end    
+
 			ExLibrisForm.Form:Show();
             
 			if settings.autoSearch then
+                --interfaceMngr:ShowMessage("issn=<" .. GetFieldValue("Transaction", "ISSN") ..">", "debug");
+
 			    if settings.StartwithISxN and GetFieldValue("Transaction", "ISSN") ~= "" then
+                   --interfaceMngr:ShowMessage("issn=<" .. GetFieldValue("Transaction", "ISSN") ..">", "debug");
 				   ExLibrisForm.Browser:RegisterPageHandler("formExists", "searchForm", "SearchISxN", false);
 			    else
 
@@ -77,20 +160,12 @@ function SearchISxN()
     local found = false;
     
     if GetFieldValue("Transaction", "ISSN") ~= "" then
-        sep = "%(";
-		fields = {};
+        
         issn = GetFieldValue("Transaction", "ISSN");
-		issn:gsub("([^"..sep.."]*)"..sep, function(c) table.insert(fields, c) end);
-        
-        --interfaceMngr:ShowMessage(fields.Count, "debug");
-        
-        for i,v in ipairs(fields) do 
-            ExLibrisForm.Browser:SetFormValue("searchForm","search_field",v);
-            found = true;
-        end
-        if found == false then
-            ExLibrisForm.Browser:SetFormValue("searchForm","search_field",issn);
-        end
+        issn = CleanIssn(issn);
+        --interfaceMngr:ShowMessage("issn=<" .. issn ..">", "debug");
+
+        ExLibrisForm.Browser:SetFormValue("searchForm","search_field",issn);
 
 	else
        interfaceMngr:ShowMessage("ISxN is not available from request form", "Insufficient Information");
@@ -99,6 +174,27 @@ function SearchISxN()
        ExLibrisForm.Browser:ClickObject("goButton");
 
 	end
+
+function CleanIssn(issn)
+    local clean = "";
+
+    clean = RemoveSep("%(", issn);
+    clean = RemoveSep(" ", clean);
+
+    return clean;
+end
+
+function RemoveSep(sep, issn)
+    fields = {};
+    local out = "";
+    out = issn:gsub("([^"..sep.."]*)"..sep, function(c) table.insert(fields, c) end);
+
+    for i,v in ipairs(fields) do 
+        out = v;
+    end
+    
+    return out;
+end
 
 function SearchTitle()
 	local Articletitle = nil;
@@ -130,6 +226,8 @@ function SearchJournalTitle()
 	local Articletitle = nil;
 	local Loantitle = nil;
 
+    --interfaceMngr:ShowMessage("GetFieldValue:" .. GetFieldValue ("Transaction", "PhotoJournalTitle"), "Debug");
+
     if GetFieldValue("Transaction", "RequestType") == "Loan" then  
 		if string.find(GetFieldValue ("Transaction", "LoanTitle"),"/",1) ~=nil then
 			Loantitle = string.sub(GetFieldValue ("Transaction", "LoanTitle"),1, string.find(GetFieldValue ("Transaction", "LoanTitle"),"/",1)-1);
@@ -150,6 +248,22 @@ function SearchJournalTitle()
     
 	ExLibrisForm.Browser:ClickObject("goButton");
     
+end
+
+function ShowHideDetails()
+    if CitationVisibility == true then
+        CitationVisibility = false;
+        ExLibrisForm.Form:LoadLayout(AddonInfo.Directory .. "\\layout-hidden-details.xml");
+    else
+        CitationVisibility = true;
+        if GetFieldValue("Transaction", "RequestType") == "Loan" then
+            ExLibrisForm.Form:LoadLayout(AddonInfo.Directory .. "\\layout-loan-default.xml");
+        else
+            ExLibrisForm.Form:LoadLayout(AddonInfo.Directory .. "\\layout-article-default.xml");
+        end    
+    end
+    ExLibrisForm.Form:Show();
+
 end
 
 function InputLocation()
@@ -204,20 +318,12 @@ function InputLocation()
 
     --if ExLibrisForm.Browser:GetElementInFrame(nil,"exlidResult0-TabContent")~= nil then
     if ExLibrisForm.Browser:GetElementInFrame(em,"RTADivTitle_0")~= nil then
-	    -- the line below creates an array of elements that are of <span> type
-        local cElements = ExLibrisForm.Browser.WebBrowser.Document:GetElementsByTagName("span");
-    
-        -- if the array is empty, the function ends
-        if cElements == nil then
-	        return false;
-        end
-
-        local collectionName = GetInnerContentFromClass(cElements,"EXLAvailabilityCollectionName");
-        local libraryName = GetInnerContentFromClass(cElements,"EXLAvailabilityLibraryName");
-        local callNumber = GetInnerContentFromClass(cElements,"EXLAvailabilityCallNumber");
+        local collectionName = GetInnerContentFromClass("span","EXLAvailabilityCollectionName");
+        local libraryName = GetInnerContentFromClass("span","EXLAvailabilityLibraryName");
+        local callNumber = GetInnerContentFromClass("span","EXLAvailabilityCallNumber");
         local sourceType = GetSourceType();
 
-        local collectionFound = IsClassNameFoundInElements(cElements,"EXLAvailabilityCollectionName");
+        local collectionFound = IsClassNameFoundInElements("span","EXLAvailabilityCollectionName");
 
         if collectionFound then
             location = FormatLocation(libraryName, collectionName);
@@ -255,7 +361,7 @@ function CleanupCallNum(callNum)
     return tmpStr2;
 end
 
-function trimSpaces(str)
+function TrimSpaces(str)
     --print( string.format( "Leading whitespace removed: %s", str:match( "^%s*(.+)" ) ) )
     --print( string.format( "Trailing whitespace removed: %s", str:match( "(.-)%s*$" ) ) )
     --print( string.format( "Leading and trailing whitespace removed: %s", str:match( "^%s*(.-)%s*$" ) ) )
@@ -265,13 +371,12 @@ end
 function GetSourceType()
     local cElements = ExLibrisForm.Browser.WebBrowser.Document:GetElementsByTagName("em");
     local content = "";
-    --todo: fix this:
     for i=0, cElements.Count - 1 do
 	    element1 = ExLibrisForm.Browser:GetElementByCollectionIndex(cElements, i);
 			    
 	    if element1.ParentNode ~= nil then
 		    if (element1:GetAttribute("className")=="EXLResultStatusMaybeAvailable") or (element1:GetAttribute("className")=="EXLResultStatusAvailable") then
-                content = trimSpaces(element1.InnerText);
+                content = TrimSpaces(element1.InnerText);
                 break
 		    end
 	    end -- for if element1.ParentNode
@@ -280,12 +385,28 @@ function GetSourceType()
     return content;
 end
 
-function IsClassNameFoundInElements(cElements,className)
+function IsClassNameFoundInElements(element,className)
+    
+
+ -- the line below creates an array of elements that are of <span> type
+    local cElements = ExLibrisForm.Browser.WebBrowser.Document:GetElementsByTagName(element);
+
+    -- if the array is empty, the function ends
+    if cElements == nil then
+	    return false;
+    end
+
     local found = false;
     for i=0, cElements.Count - 1 do	        
 	    element1 = ExLibrisForm.Browser:GetElementByCollectionIndex(cElements, i);
-	    if element1.ParentNode ~= nil then
+        parent = ExLibrisForm.Browser:GetParentElement(element1);
+
+	    if element1.ParentNode ~= nil and parent:GetAttribute("id") == "RTADivTitle_0" then
 		    if element1:GetAttribute("className")==className then
+                
+                --interfaceMngr:ShowMessage("element1.id:<" .. element1:GetAttribute("id")..">", "Debug");
+
+                
 			    found = true						
 			    break
 		    end
@@ -294,18 +415,32 @@ function IsClassNameFoundInElements(cElements,className)
     return found;
 end
 
-function GetInnerContentFromClass(cElements, className)
+function GetInnerContentFromClass(element, className)
+
+
+    -- the line below creates an array of elements that are of <span> type
+    local cElements = ExLibrisForm.Browser.WebBrowser.Document:GetElementsByTagName(element);
+
+    -- if the array is empty, the function ends
+    if cElements == nil then
+	    return "";
+    end
+
     local content = "";
 
     -- the number of items in the array is counted	
     for i=0, cElements.Count - 1 do
 	    -- the items in the array are indexed and stored in the variable "element1"
 	    element1 = ExLibrisForm.Browser:GetElementByCollectionIndex(cElements, i);
-			    
+
+		parent = ExLibrisForm.Browser:GetParentElement(element1);
+        --interfaceMngr:ShowMessage("parent element:<" .. parent:GetAttribute("id") ..">", "Debug");
+        	    
 	    -- if <span> elements exist in the array, the function continues   
-	    if element1.ParentNode ~= nil then
+	    if element1.ParentNode ~= nil and parent:GetAttribute("id") == "RTADivTitle_0" then
 		    -- the line below looks through the <span> elements for the className
 		    if element1:GetAttribute("className")==className then
+                
 			    -- if the className "EXLAvailabilityCollectionName" exists, it is set to a local variable by getting the inner text
                 content = element1.InnerText;
                 break
@@ -316,6 +451,7 @@ function GetInnerContentFromClass(cElements, className)
 end
 
 function FormatLocation(libraryName, collectionName)
+    libraryName = TrimSpaces(libraryName);
     if libraryName == "McDowell Veterinary Library" then
         return "Vetmed " .. collectionName;
     elseif libraryName == "Guin Library-Newport" then
