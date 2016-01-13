@@ -119,7 +119,8 @@ function Init()
 			-- Since we didn't create a ribbon explicitly before creating our browser, it will have created one using the name we passed the CreateBrowser method.  We can retrieve that one and add our buttons to it.
 			ExLibrisForm.RibbonPage = ExLibrisForm.Form:GetRibbonPage("ExLibris");
 		    ExLibrisForm.RibbonPage:CreateButton("Search ISxN", GetClientImage("Search32"), "SearchISxN", settings.AddonRibbonName);
-			ExLibrisForm.RibbonPage:CreateButton("Search Title", GetClientImage("Search32"), "SearchTitle", settings.AddonRibbonName);
+			ExLibrisForm.RibbonPage:CreateButton("Search Book/Article Title", GetClientImage("Search32"), "SearchTitle", settings.AddonRibbonName);
+            ExLibrisForm.RibbonPage:CreateButton("Search Book/Journal Title", GetClientImage("Search32"), "SearchJournalTitle", settings.AddonRibbonName);
             ExLibrisForm.RibbonPage:CreateButton("Show/Hide Details", GetClientImage("DocumentDelivery32"), "ShowHideDetails", settings.AddonRibbonName);
 
 			ExLibrisForm.RibbonPage:CreateButton("Input Location/ Call Number", GetClientImage("Borrowing32"), "InputLocation", "Location Info");
@@ -338,8 +339,8 @@ function InputLocation()
 			end  -- for if PopUp						
         else
             local location = "";
-            if sourceType == "Online access" then
-                location = sourceType;
+            if sourceType == "Online access" or StringContainsOnlineAccess(sourceType) then
+                location = "Online access";
             else
                 location = FormatLocation(libraryName, collectionName);
             end
@@ -366,6 +367,14 @@ function TrimSpaces(str)
     --print( string.format( "Trailing whitespace removed: %s", str:match( "(.-)%s*$" ) ) )
     --print( string.format( "Leading and trailing whitespace removed: %s", str:match( "^%s*(.-)%s*$" ) ) )
     return str:match("^%s*(.-)%s*$")
+end
+
+function StringContainsOnlineAccess(str)
+    if string.find(str, "Online access") then
+        return true;
+    else
+        return false;
+    end
 end
 
 function GetSourceType()
