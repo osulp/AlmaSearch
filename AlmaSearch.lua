@@ -24,7 +24,8 @@ settings.StartwithISxN = GetSetting("StartwithISxN");
 settings.DefaultScope = GetSetting("DefaultScope");
 local interfaceMngr = nil;
 local ExLibrisForm = {};
-local libraryurl = settings.localurl
+local libraryurl = settings.localurl;
+local DatabaseName = "OSU";
 local CitationVisibility = true;
 ExLibrisForm.Form = nil;
 ExLibrisForm.Browser = nil;
@@ -140,13 +141,13 @@ function Init()
 
 			    if settings.StartwithISxN and GetFieldValue("Transaction", "ISSN") ~= "" then
                    --interfaceMngr:ShowMessage("issn=<" .. GetFieldValue("Transaction", "ISSN") ..">", "debug");
-				   ExLibrisForm.Browser:RegisterPageHandler("formExists", "searchForm", "SearchISxN", false);
+				   --ExLibrisForm.Browser:RegisterPageHandler("formExists", "searchForm", "SearchISxN", false);
+                   SearchISxN();
 			    else
-
-                   ExLibrisForm.Browser:RegisterPageHandler("formExists", "searchForm", "SearchJournalTitle", false);
+                   --ExLibrisForm.Browser:RegisterPageHandler("formExists", "searchForm", "SearchJournalTitle", false);
+                   SearchJournalTitle();
 				end
-				ExLibrisForm.Browser:Navigate(libraryurl);
-                
+				    
 			end
 	          
 end
@@ -166,13 +167,14 @@ function SearchISxN()
         issn = CleanIssn(issn);
         --interfaceMngr:ShowMessage("issn=<" .. issn ..">", "debug");
 
-        ExLibrisForm.Browser:SetFormValue("searchForm","search_field",issn);
+        --ExLibrisForm.Browser:SetFormValue("searchForm","search_field",issn);
+     	ExLibrisForm.Browser:Navigate(libraryurl .. "/primo-explore/search?query=any,contains," .. issn .. "&tab=default_tab&search_scope=osu_alma&sortby=rank&vid=" .. DatabaseName .. "&lang=en_US&offset=0");
 
 	else
        interfaceMngr:ShowMessage("ISxN is not available from request form", "Insufficient Information");
 	end
-       ExLibrisForm.Browser:SetFormValue("searchForm","scp.scps", settings.DefaultScope);
-       ExLibrisForm.Browser:ClickObject("goButton");
+       --ExLibrisForm.Browser:SetFormValue("searchForm","scp.scps", settings.DefaultScope);
+       --ExLibrisForm.Browser:ClickObject("goButton");
 
 	end
 
@@ -207,20 +209,20 @@ function SearchTitle()
 		else
 			Loantitle = GetFieldValue ("Transaction", "LoanTitle");
 		end
-		
-		ExLibrisForm.Browser:SetFormValue("searchForm","search_field", Loantitle);
+		ExLibrisForm.Browser:Navigate(libraryurl .. "/primo-explore/search?query=any,contains," ..  Loantitle .. "&tab=default_tab&search_scope=osu_alma&sortby=rank&vid=" .. DatabaseName .. "&lang=en_US&offset=0");
+		--ExLibrisForm.Browser:SetFormValue("searchForm","search_field", Loantitle);
 	else
 		if string.find(GetFieldValue ("Transaction", "PhotoArticleTitle"),"/",1)~=nil then
 			 Articletitle = string.sub(GetFieldValue ("Transaction", "PhotoArticleTitle"),1, string.find(GetFieldValue ("Transaction", "PhotoArticleTitle"),"/",1)-1);
 		else
 			 Articletitle = GetFieldValue ("Transaction", "PhotoArticleTitle");
 		end
-		
-		ExLibrisForm.Browser:SetFormValue("searchForm","search_field", Articletitle);
+		ExLibrisForm.Browser:Navigate(libraryurl .. "/primo-explore/search?query=any,contains," ..  Articletitle .. "&tab=default_tab&search_scope=osu_alma&sortby=rank&vid=" .. DatabaseName .. "&lang=en_US&offset=0");
+		--ExLibrisForm.Browser:SetFormValue("searchForm","search_field", Articletitle);
 	end
     
-	ExLibrisForm.Browser:ClickObject("goButton");
-    
+	--ExLibrisForm.Browser:ClickObject("goButton");
+
 end
 
 function SearchJournalTitle()
@@ -236,7 +238,8 @@ function SearchJournalTitle()
 			Loantitle = GetFieldValue ("Transaction", "LoanTitle");
 		end
 		
-		ExLibrisForm.Browser:SetFormValue("searchForm","search_field", Loantitle);
+		--ExLibrisForm.Browser:SetFormValue("searchForm","search_field", Loantitle);
+        ExLibrisForm.Browser:Navigate(libraryurl .. "/primo-explore/search?query=any,contains," ..  Loantitle .. "&tab=default_tab&search_scope=osu_alma&sortby=rank&vid=" .. DatabaseName .. "&lang=en_US&offset=0");
 	else
 		if string.find(GetFieldValue ("Transaction", "PhotoJournalTitle"),"/",1)~=nil then
 			 Articletitle = string.sub(GetFieldValue ("Transaction", "PhotoJournalTitle"),1, string.find(GetFieldValue ("Transaction", "PhotoJournalTitle"),"/",1)-1);
@@ -244,10 +247,11 @@ function SearchJournalTitle()
 			 Articletitle = GetFieldValue ("Transaction", "PhotoJournalTitle");
 		end
 		
-		ExLibrisForm.Browser:SetFormValue("searchForm","search_field", Articletitle);
+		--ExLibrisForm.Browser:SetFormValue("searchForm","search_field", Articletitle);
+        ExLibrisForm.Browser:Navigate(libraryurl .. "/primo-explore/search?query=any,contains," ..  Articletitle .. "&tab=default_tab&search_scope=osu_alma&sortby=rank&vid=" .. DatabaseName .. "&lang=en_US&offset=0");
 	end
     
-	ExLibrisForm.Browser:ClickObject("goButton");
+	--ExLibrisForm.Browser:ClickObject("goButton");
     
 end
 
