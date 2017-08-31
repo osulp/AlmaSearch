@@ -271,99 +271,119 @@ function ShowHideDetails()
 
 end
 
+-- InputLocation assumes that we have the following classes in place to work as expected:
+
+-- a) available in main lib: 
+-- class: "availability-status available_in_maininstitution"
+                
+-- b) not available: 
+-- class: "availability-status unavailable_in_institution"
+                
+-- c) avalable online: 
+-- class: "availability-status not_restricted"
+                
+-- d) available in other libraries: 
+-- class: "availability-status available_in_institution"
+                
+-- e) request this item (may be loanable): 
+-- class: "availability-status unavailable_in_maininstitution_more"
+                
+-- f) check holdings (on hold): 
+-- class: "availability-status check_holdings_in_institution"
+
 function InputLocation()
-	local element =nil;
-
-	if ExLibrisForm.Browser:GetElementInFrame(nil,"locationsTabForm")~= nil then
-		--local LocationValue = ExLibrisForm.Browser:GetElementInFrame(nil, "EXLLocationInfo");
-		--if LocationValue==nil then
-			local bElements = ExLibrisForm.Browser.WebBrowser.Document:GetElementsByTagName("cite");
-			if bElements == nil then
-				return false;
-			end
-
-			for i=0, bElements.Count - 1 do
-				 element = ExLibrisForm.Browser:GetElementByCollectionIndex(bElements, i);
-
-				if element ~= nil then
-						if string.find(element.InnerText, [[(]], 1, true) ~= nil then 
-							SetFieldValue("Transaction", "CallNumber", element.InnerText);
-							if settings.Popup == true then
-							interfaceMngr:ShowMessage("Request Call Number Field has been set to:" .. element.InnerText, "Call Number Updated for Request");
-							end
-							break
-						end
-
-				end
-			end -- for loop
+    local element =nil;
+	local cElements = ExLibrisForm.Browser.WebBrowser.Document:GetElementsByTagName("prm-search-result-availability-line");
+	if cElements == nil then
+		return false;
 	end
+	--interfaceMngr:ShowMessage("cElements.Count=" .. cElements.Count, "debug");
 	
-    if ExLibrisForm.Browser:GetElementInFrame(nil,"locationsTabForm")~= nil then
-			local cElements = ExLibrisForm.Browser.WebBrowser.Document:GetElementsByTagName("div");
-			if cElements == nil then
-				return false;
-			end
-				
-			for i=0, cElements.Count - 1 do
-				
-				local element1 = ExLibrisForm.Browser:GetElementByCollectionIndex(cElements, i);
-			    
-				if element1.ParentNode ~= nil then
-					if element1:GetAttribute("className")=="EXLLocationListContainer" then
-					    local dElement = string.sub(element1.InnerText, 1, string.find(element1.InnerText,element.InnerText,1)-2);
-			            SetFieldValue("Transaction", "Location", dElement);
-						if settings.Popup == true then
-						    interfaceMngr:ShowMessage("Location has been set to: " .. dElement, "Location Info Updated for Request");
-						end
-						break
-					end
-				end
-			end
-	end
+	for i=0, cElements.Count - 1 do
+        local element1 = ExLibrisForm.Browser:GetElementByCollectionIndex(cElements, i);
+        -- only return the first item
+        if i == 0 then
+            local subElements = element1:GetElementsByTagName("span");
 
-    --if ExLibrisForm.Browser:GetElementInFrame(nil,"exlidResult0-TabContent")~= nil then
-    if ExLibrisForm.Browser:GetElementInFrame(em,"RTADivTitle_0")~= nil then
-        local collectionName = GetInnerContentFromClass("span","EXLAvailabilityCollectionName");
-        local libraryName = GetInnerContentFromClass("span","EXLAvailabilityLibraryName");
-        local callNumber = GetInnerContentFromClass("span","EXLAvailabilityCallNumber");
-        local sourceType = GetSourceType();
+            if subElements == nil then
+		        break;
+	        end
+            --interfaceMngr:ShowMessage("subElements.Count=" .. subElements.Count, "debug");
 
-        local collectionFound = IsClassNameFoundInElements("span","EXLAvailabilityCollectionName");
-
-        if collectionFound then
-            location = FormatLocation(libraryName, collectionName);
-
-            local cleanCallNum = CleanupCallNum(callNumber);
-			SetFieldValue("Transaction", "Location", location);
-            SetFieldValue("Transaction", "CallNumber", cleanCallNum);
-			-- if the user has selected to receive popups when importing Call#, they will receive a popup
-			if settings.Popup then
-			    interfaceMngr:ShowMessage("Location has been set to: " .. location, "Collection Info Updated for Request");
-                interfaceMngr:ShowMessage("CallNumber has been set to: " .. cleanCallNum, "CallNumber Info Updated for Request");
-			end  -- for if PopUp						
-        else
+            local libraryName = "";
+            local collectionName = "";
             local location = "";
-            if sourceType == "Online access" or StringContainsOnlineAccess(sourceType) then
-                location = "Online access";
-            else
-                location = FormatLocation(libraryName, collectionName);
+            local callNumber = "";
+                
+            for j=0, subElements.Count - 1 do
+                local subelement1 = ExLibrisForm.Browser:GetElementByCollectionIndex(subElements, j);
+                
+                -- get library name         
+		        if subelement1:GetAttribute("className")=="best-location-library-code locations-link" then
+                    libraryName = subelement1.InnerText;
+		        end
+
+		        -- get collection name 
+		        if subelement1:GetAttribute("className")=="best-location-sub-location locations-link" then
+                    collectionName = subelement1.InnerText;
+                    location = FormatLocation(libraryName, collectionName);
+		        end
+
+                if subelement1:GetAttribute("className")=="availability-status not_restricted" then
+                    location = "Online access";
+                end
+
+                -- set call number
+                if subelement1:GetAttribute("className")=="best-location-delivery locations-link" then
+                    callNumber = CleanupCallNum(subelement1.InnerText);
+	                SetFieldValue("Transaction", "CallNumber", callNumber);
+                    if settings.Popup then
+                        interfaceMngr:ShowMessage("CallNumber has been set to: " .. callNumber, "CallNumber Info Updated for Request");
+                    end
+			        break;
+		        end
             end
 
-            SetFieldValue("Transaction", "Location", location);
-            if settings.Popup then
-			    interfaceMngr:ShowMessage("Location has been set to: " .. location, "Collection Info Updated for Request");
+            -- set location
+            if location ~= "" then
+                SetFieldValue("Transaction", "Location", location);
+                if settings.Popup then
+                    interfaceMngr:ShowMessage("Location has been set to: " .. location, "Location Info Updated for Request");
+                end
             end
+
+            break;
         end
-
-    end -- for if GetElementInFrame
+	end
 
 	ExecuteCommand("SwitchTab", {"Detail"});
+end
+
+function IsSpanClassNameInElement(element,classname)
+ -- the line below creates an array of elements that are of <span> type
+    local cElements = element:GetElementsByTagName("span");
+
+    -- if the array is empty, the function ends
+    if cElements == nil then
+	    return false;
+    end
+
+    local found = false;
+    for i=0, cElements.Count - 1 do	        
+	    element1 = ExLibrisForm.Browser:GetElementByCollectionIndex(cElements, i);
+
+        if element1:GetAttribute("className")==classname then
+            found = true;
+            break;
+        end
+    end
+    return found;
 end
 
 function CleanupCallNum(callNum)
     local tmpStr1 = string.gsub(callNum, "%(", "");
     local tmpStr2 = string.gsub(tmpStr1, "%)", "");
-    return tmpStr2;
+    return TrimSpaces(tmpStr2);
 end
 
 function TrimSpaces(str)
@@ -397,6 +417,8 @@ function GetSourceType()
     --interfaceMngr:ShowMessage("sourcetype=<" .. content .. ">", "debug");
     return content;
 end
+
+
 
 function IsClassNameFoundInElements(element,className)
     
