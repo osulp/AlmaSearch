@@ -1,43 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
-  <Name>AlmaSearch</Name>
-  <Author>IDS Project</Author>
+  <Name>Primo New UI</Name>
+  <Author>Bill Jones</Author>
   <Version>1.1</Version>
-  <Active>true</Active>
+  <Active>True</Active>
   <Type>Addon</Type>
-  <Description>Searches ExLibris Alma/Primo Catalog for ISSN or Title for loans and articles and allows for input of Call Number and Location for Loans into the Details tab of the request.</Description>
+  <Description>Performs an Title, ISBN, and ISSN Search in the Primo New UI interface.</Description>
   <Forms>
     <Form>FormRequest</Form>
   </Forms>
   <Settings>
-    <Setting name="AutoSearch" value="true" type="boolean">
-      <Description>Determines whether or not the search should be done automatically when the request is opened.</Description>
+    <Setting name="GoToLandingPage" value="" type="boolean">
+      <Description>Defines whether you would like the Addon to go directly to the PrimoURL start page set in your config.</Description>
     </Setting>
-    <Setting name="StartwithISxN" value="true" type="boolean">
-      <Description>Determines whether or not the Addon should start the search with item ISxN.</Description>
+    <Setting name="AutoSearchISxN" value="true" type="boolean">
+      <Description>Defines whether the ISxN search should be automatically performed when the form opens.</Description>
     </Setting>
-    <Setting name="Popup" value="false" type="boolean">
-      <Description>Determines whether or not you would like confirmation messages for location and call number input into the request form.</Description>
+    <Setting name="AutoSearchTitle" value="" type="boolean">
+      <Description>Defines whether the Title search should be automatically performed when the form opens.</Description>
     </Setting>
-    <Setting name="localurl" value="http://search.library.oregonstate.edu" type="string">
-      <Description>Enter in your shortened URL for your catalog (e.g. http://search.library.northwestern.edu/).  Include the colon and port number if part of the string.</Description>
+    <Setting name="PrimoURL" value="https://search.library.oregonstate.edu/primo-explore/search?vid=OSU&amp;sortby=rank" type="string">
+      <Description>Defines the default landing page for your Primo New UI page  See the ReadMe for an example.</Description>
     </Setting>
-    <Setting name="AddonRibbonName" value="AlmaPrimoDev" type="string">
-      <Description>Enter the name that you would like to appear for the tab associated with this Addon (example: Alma) (example:Primo)</Description>
+	<Setting name="BaseURL" value="https://search.library.oregonstate.edu" type="string">
+      <Description>Defines the base of your Primo URL. See the ReadMe for an example.</Description>
     </Setting>
-    <Setting name="DefaultScope" value="scope:(OSU),scope:(E-OSU)" type="string">
-      <Description>
-        Determines the default scope that the search should pick when the request is opened. Default is set to 'At OSU Libraries only'. Other options available are listed here:
-        For 'Books, media and articles' enter: 'scope:(OSU),scope:(P),scope:(E-OSU),primo_central_multiple_fe',
-        for 'At OSU Libraries only' enter: 'scope:(OSU),scope:(E-OSU)',
-        for 'OSU Libraries + Summit' enter 'scope:(OSU),scope:(P),scope:(E-OSU)',
-        for 'Special Collections and Archives' enter: 'scope:(OSU_SCARC)',
-        for 'Articles' enter: 'primo_central_multiple_fe',
-        and for 'OSU Cascades' enter: 'scope:(OSU_CASCADES)'
-      </Description>
+    <Setting name="DatabaseName" value="OSU" type="string">
+      <Description>Defines the Database Name of your Primo URL. See the ReadMe for an example.</Description>
     </Setting>
   </Settings>
   <Files>
-    <File>AlmaSearch.lua</File>
+    <File>PrimoNewUI.lua</File>
   </Files>
 </Configuration>
