@@ -114,8 +114,8 @@ function Init()
 	PrimoNewUIForm.RibbonPage:CreateButton("Search ISxN", GetClientImage("Search32"), "SearchISxN", "PrimoNewUI");
 	PrimoNewUIForm.RibbonPage:CreateButton("Search Title", GetClientImage("Search32"), "SearchTitle", "PrimoNewUI");
 	PrimoNewUIForm.RibbonPage:CreateButton("Phrase Search", GetClientImage("Search32"), "SearchPhrase", "PrimoNewUI");
-    PrimoNewUIForm.RibbonPage:CreateButton("Input Location/ Call Number", GetClientImage("Borrowing32"), "InputLocation", "PrimoNewUI");
     PrimoNewUIForm.RibbonPage:CreateButton("Show/Hide Details", GetClientImage("DocumentDelivery32"), "ShowHideDetails", "PrimoNewUI");
+    PrimoNewUIForm.RibbonPage:CreateButton("Input Location/ Call Number", GetClientImage("Borrowing32"), "InputLocation", "PrimoNewUI");    
     
     if GetFieldValue("Transaction", "RequestType") == "Loan" then
         PrimoNewUIForm.Form:LoadLayout(AddonInfo.Directory .. "\\layout-loan-default.xml");
@@ -266,10 +266,33 @@ end
 -- This function searches for ISxN for both Loan and Article requests.
 function SearchISxN()
     if GetFieldValue("Transaction", "ISSN") ~= "" then
-		PrimoNewUIForm.Browser:Navigate(settings.BaseURL .. "/primo-explore/search?query=any,contains," .. AtlasHelpers.UrlEncode(GetFieldValue("Transaction", "ISSN")) .. "&tab=default_tab&search_scope=osu_alma&sortby=rank&vid=" .. settings.DatabaseName .. "&lang=en_US&offset=0");
+        issn = GetFieldValue("Transaction", "ISSN");
+        issn = CleanIssn(issn);
+		PrimoNewUIForm.Browser:Navigate(settings.BaseURL .. "/primo-explore/search?query=any,contains," .. AtlasHelpers.UrlEncode(issn) .. "&tab=default_tab&search_scope=osu_alma&sortby=rank&vid=" .. settings.DatabaseName .. "&lang=en_US&offset=0");
 	else
 		interfaceMngr:ShowMessage("ISxN is not available from request form", "Insufficient Information");
 	end
+end
+
+function CleanIssn(issn)
+    local clean = "";
+    clean = TrimSpaces(issn);
+    clean = RemoveSep("%(", clean);
+    clean = RemoveSep(" ", clean);
+
+    return clean;
+end
+
+function RemoveSep(sep, issn)
+    fields = {};
+    local out = "";
+    out = issn:gsub("([^"..sep.."]*)"..sep, function(c) table.insert(fields, c) end);
+
+    for i,v in ipairs(fields) do 
+        out = v;
+    end
+    
+    return out;
 end
 
 -- This function performs a quoted phrase search for LoanTitle for Loan requests and PhotoJournalTitle for Article requests.
