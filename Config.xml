@@ -19,6 +19,9 @@
     <Setting name="AutoSearchTitle" value="" type="boolean">
       <Description>Defines whether the Title search should be automatically performed when the form opens.</Description>
     </Setting>
+    <Setting name="EnableTopBar" value="" type="boolean">
+      <Description>Defines whether the top section should display request info above the browser.</Description>
+    </Setting>
     <Setting name="PrimoURL" value="https://search.library.oregonstate.edu/primo-explore/search?vid=OSU&amp;sortby=rank" type="string">
       <Description>Defines the default landing page for your Primo New UI page  See the ReadMe for an example.</Description>
     </Setting>

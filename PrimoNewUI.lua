@@ -17,6 +17,7 @@ settings.AutoSearchTitle = GetSetting("AutoSearchTitle");
 settings.PrimoURL = GetSetting("PrimoURL");
 settings.BaseURL = GetSetting("BaseURL")
 settings.DatabaseName = GetSetting("DatabaseName");
+settings.EnableTopBar = GetSetting("EnableTopBar");
 
 local interfaceMngr = nil;
 local PrimoNewUIForm = {};
@@ -47,56 +48,59 @@ function Init()
     -- Create Form
     PrimoNewUIForm.Form = interfaceMngr:CreateForm("PrimoNewUI", "Script");
 
-    -- Create TextEdit elements to hold request values
-    if GetFieldValue("Transaction", "RequestType") == "Loan" then
-        PrimoNewUIForm.ReqLoanTitle = PrimoNewUIForm.Form:CreateTextEdit("LoanTitle", "Loan Title");
-        PrimoNewUIForm.ReqLoanTitle.Value = GetFieldValue("Transaction", "LoanTitle");
-        PrimoNewUIForm.ReqLoanTitle.ReadOnly = true;
-    
-        PrimoNewUIForm.ReqLoanAuthor = PrimoNewUIForm.Form:CreateTextEdit("LoanAuthor", "Loan Author");
-        PrimoNewUIForm.ReqLoanAuthor.Value =  GetFieldValue ("Transaction", "LoanAuthor");
-        PrimoNewUIForm.ReqLoanAuthor.ReadOnly = true;
-    
-        PrimoNewUIForm.ReqLoanPublisher = PrimoNewUIForm.Form:CreateTextEdit("LoanPublisher", "Loan Publisher");
-        PrimoNewUIForm.ReqLoanPublisher.Value = GetFieldValue ("Transaction", "LoanPublisher");
-        PrimoNewUIForm.ReqLoanPublisher.ReadOnly = true;
-    
-    else
-        PrimoNewUIForm.ReqJournalTitle = PrimoNewUIForm.Form:CreateTextEdit("JuornalTitle", "Journal Title");
-        PrimoNewUIForm.ReqJournalTitle.Value = GetFieldValue("Transaction", "PhotoJournalTitle");
-        PrimoNewUIForm.ReqJournalTitle.ReadOnly = true;
-    
-        PrimoNewUIForm.ReqArticleAuthor = PrimoNewUIForm.Form:CreateTextEdit("ArticleAuthor", "Article Author");
-        PrimoNewUIForm.ReqArticleAuthor.Value = GetFieldValue("Transaction", "PhotoArticleAuthor");
-        PrimoNewUIForm.ReqArticleAuthor.ReadOnly = true;
+    if settings.EnableTopBar == true then
+        -- Create TextEdit elements to hold request values
+        if GetFieldValue("Transaction", "RequestType") == "Loan" then
+            PrimoNewUIForm.ReqLoanTitle = PrimoNewUIForm.Form:CreateTextEdit("LoanTitle", "Loan Title");
+            PrimoNewUIForm.ReqLoanTitle.Value = GetFieldValue("Transaction", "LoanTitle");
+            PrimoNewUIForm.ReqLoanTitle.ReadOnly = true;
+        
+            PrimoNewUIForm.ReqLoanAuthor = PrimoNewUIForm.Form:CreateTextEdit("LoanAuthor", "Loan Author");
+            PrimoNewUIForm.ReqLoanAuthor.Value =  GetFieldValue ("Transaction", "LoanAuthor");
+            PrimoNewUIForm.ReqLoanAuthor.ReadOnly = true;
+        
+            PrimoNewUIForm.ReqLoanPublisher = PrimoNewUIForm.Form:CreateTextEdit("LoanPublisher", "Loan Publisher");
+            PrimoNewUIForm.ReqLoanPublisher.Value = GetFieldValue ("Transaction", "LoanPublisher");
+            PrimoNewUIForm.ReqLoanPublisher.ReadOnly = true;
+        
+        else
+            PrimoNewUIForm.ReqJournalTitle = PrimoNewUIForm.Form:CreateTextEdit("JuornalTitle", "Journal Title");
+            PrimoNewUIForm.ReqJournalTitle.Value = GetFieldValue("Transaction", "PhotoJournalTitle");
+            PrimoNewUIForm.ReqJournalTitle.ReadOnly = true;
+        
+            PrimoNewUIForm.ReqArticleAuthor = PrimoNewUIForm.Form:CreateTextEdit("ArticleAuthor", "Article Author");
+            PrimoNewUIForm.ReqArticleAuthor.Value = GetFieldValue("Transaction", "PhotoArticleAuthor");
+            PrimoNewUIForm.ReqArticleAuthor.ReadOnly = true;
 
-        PrimoNewUIForm.ReqArticleTitle = PrimoNewUIForm.Form:CreateTextEdit("ArticleTitle", "Article Title");
-        PrimoNewUIForm.ReqArticleTitle.Value = GetFieldValue("Transaction", "PhotoArticleTitle");
-        PrimoNewUIForm.ReqArticleTitle.ReadOnly = true;
-    
-        PrimoNewUIForm.ReqVol = PrimoNewUIForm.Form:CreateTextEdit("Volume", "Volume/Issue");
-        PrimoNewUIForm.ReqVol.Value = GetFieldValue ("Transaction", "PhotoJournalVolume");
-        PrimoNewUIForm.ReqVol.ReadOnly = true;
+            PrimoNewUIForm.ReqArticleTitle = PrimoNewUIForm.Form:CreateTextEdit("ArticleTitle", "Article Title");
+            PrimoNewUIForm.ReqArticleTitle.Value = GetFieldValue("Transaction", "PhotoArticleTitle");
+            PrimoNewUIForm.ReqArticleTitle.ReadOnly = true;
+        
+            PrimoNewUIForm.ReqVol = PrimoNewUIForm.Form:CreateTextEdit("Volume", "Volume/Issue");
+            PrimoNewUIForm.ReqVol.Value = GetFieldValue ("Transaction", "PhotoJournalVolume");
+            PrimoNewUIForm.ReqVol.ReadOnly = true;
 
-        PrimoNewUIForm.ReqIssue = PrimoNewUIForm.Form:CreateTextEdit("Issue", "Issue");
-        PrimoNewUIForm.ReqIssue.Value = GetFieldValue ("Transaction", "PhotoJournalIssue") ;
-        PrimoNewUIForm.ReqIssue.LabelVisible = false;
-        PrimoNewUIForm.ReqIssue.ReadOnly = true;
-    
-        PrimoNewUIForm.ReqMonth = PrimoNewUIForm.Form:CreateTextEdit("Month", "Month/Year/Pages");
-        PrimoNewUIForm.ReqMonth.Value = GetFieldValue ("Transaction", "PhotoJournalMonth");
-        PrimoNewUIForm.ReqMonth.ReadOnly = true;
+            PrimoNewUIForm.ReqIssue = PrimoNewUIForm.Form:CreateTextEdit("Issue", "Issue");
+            PrimoNewUIForm.ReqIssue.Value = GetFieldValue ("Transaction", "PhotoJournalIssue") ;
+            PrimoNewUIForm.ReqIssue.LabelVisible = false;
+            PrimoNewUIForm.ReqIssue.ReadOnly = true;
+        
+            PrimoNewUIForm.ReqMonth = PrimoNewUIForm.Form:CreateTextEdit("Month", "Month/Year/Pages");
+            PrimoNewUIForm.ReqMonth.Value = GetFieldValue ("Transaction", "PhotoJournalMonth");
+            PrimoNewUIForm.ReqMonth.ReadOnly = true;
 
-        PrimoNewUIForm.ReqYear = PrimoNewUIForm.Form:CreateTextEdit("Year", "Year");
-        PrimoNewUIForm.ReqYear.Value = GetFieldValue ("Transaction", "PhotoJournalYear");
-        PrimoNewUIForm.ReqYear.LabelVisible = false;
-        PrimoNewUIForm.ReqYear.ReadOnly = true;
+            PrimoNewUIForm.ReqYear = PrimoNewUIForm.Form:CreateTextEdit("Year", "Year");
+            PrimoNewUIForm.ReqYear.Value = GetFieldValue ("Transaction", "PhotoJournalYear");
+            PrimoNewUIForm.ReqYear.LabelVisible = false;
+            PrimoNewUIForm.ReqYear.ReadOnly = true;
 
-        PrimoNewUIForm.ReqPages = PrimoNewUIForm.Form:CreateTextEdit("Pages", "Pages");
-        PrimoNewUIForm.ReqPages.Value = GetFieldValue ("Transaction", "PhotoJournalInclusivePages") ;
-        PrimoNewUIForm.ReqPages.LabelVisible = false;
-        PrimoNewUIForm.ReqPages.ReadOnly = true;
+            PrimoNewUIForm.ReqPages = PrimoNewUIForm.Form:CreateTextEdit("Pages", "Pages");
+            PrimoNewUIForm.ReqPages.Value = GetFieldValue ("Transaction", "PhotoJournalInclusivePages") ;
+            PrimoNewUIForm.ReqPages.LabelVisible = false;
+            PrimoNewUIForm.ReqPages.ReadOnly = true;
+        end    
     end
+
 
     -- Create browser
     PrimoNewUIForm.Browser = PrimoNewUIForm.Form:CreateBrowser("PrimoNewUI", "PrimoNewUI", "PrimoNewUI");
@@ -113,15 +117,19 @@ function Init()
 	-- Here we are adding a new button to the ribbon
 	PrimoNewUIForm.RibbonPage:CreateButton("Search ISxN", GetClientImage("Search32"), "SearchISxN", "PrimoNewUI");
 	PrimoNewUIForm.RibbonPage:CreateButton("Search Title", GetClientImage("Search32"), "SearchTitle", "PrimoNewUI");
-	PrimoNewUIForm.RibbonPage:CreateButton("Phrase Search", GetClientImage("Search32"), "SearchPhrase", "PrimoNewUI");
-    PrimoNewUIForm.RibbonPage:CreateButton("Show/Hide Details", GetClientImage("DocumentDelivery32"), "ShowHideDetails", "PrimoNewUI");
+    PrimoNewUIForm.RibbonPage:CreateButton("Phrase Search", GetClientImage("Search32"), "SearchPhrase", "PrimoNewUI");
+    if settings.EnableTopBar == true then
+        PrimoNewUIForm.RibbonPage:CreateButton("Show/Hide Details", GetClientImage("DocumentDelivery32"), "ShowHideDetails", "PrimoNewUI");
+    end
     PrimoNewUIForm.RibbonPage:CreateButton("Input Location/ Call Number", GetClientImage("Borrowing32"), "InputLocation", "PrimoNewUI");    
     
-    if GetFieldValue("Transaction", "RequestType") == "Loan" then
-        PrimoNewUIForm.Form:LoadLayout(AddonInfo.Directory .. "\\layout-loan-default.xml");
-    else
-        PrimoNewUIForm.Form:LoadLayout(AddonInfo.Directory .. "\\layout-article-default.xml");
-    end
+    if settings.EnableTopBar == true then
+        if GetFieldValue("Transaction", "RequestType") == "Loan" then
+            PrimoNewUIForm.Form:LoadLayout(AddonInfo.Directory .. "\\layout-loan-default.xml");
+        else
+            PrimoNewUIForm.Form:LoadLayout(AddonInfo.Directory .. "\\layout-article-default.xml");
+        end
+    end 
 
     PrimoNewUIForm.Form:Show();
     end
@@ -135,16 +143,18 @@ function Init()
 end
 
 function ShowHideDetails()
-    if PrimoNewUIForm.CitationVisibility == true then
-        PrimoNewUIForm.CitationVisibility = false;
-        PrimoNewUIForm.Form:LoadLayout(AddonInfo.Directory .. "\\layout-hidden-details.xml");
-    else
-        PrimoNewUIForm.CitationVisibility = true;
-        if GetFieldValue("Transaction", "RequestType") == "Loan" then
-            PrimoNewUIForm.Form:LoadLayout(AddonInfo.Directory .. "\\layout-loan-default.xml");
+    if settings.EnableTopBar == true then
+        if PrimoNewUIForm.CitationVisibility == true then
+            PrimoNewUIForm.CitationVisibility = false;
+            PrimoNewUIForm.Form:LoadLayout(AddonInfo.Directory .. "\\layout-hidden-details.xml");
         else
-            PrimoNewUIForm.Form:LoadLayout(AddonInfo.Directory .. "\\layout-article-default.xml");
-        end    
+            PrimoNewUIForm.CitationVisibility = true;
+            if GetFieldValue("Transaction", "RequestType") == "Loan" then
+                PrimoNewUIForm.Form:LoadLayout(AddonInfo.Directory .. "\\layout-loan-default.xml");
+            else
+                PrimoNewUIForm.Form:LoadLayout(AddonInfo.Directory .. "\\layout-article-default.xml");
+            end    
+        end
     end
 end
 
