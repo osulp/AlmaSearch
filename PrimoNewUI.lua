@@ -276,8 +276,13 @@ end
 
 function CleanIssn(issn)
     local clean = "";
+    -- remove leading and trailing whitespace
     clean = TrimSpaces(issn);
+    -- get all issn character values before the first occurence of character ','
+    clean = RemoveSep(",", clean);
+    -- get all issn character values before the first occurence of character '('
     clean = RemoveSep("%(", clean);
+    -- get all issn character values before the first occurence of character ' '
     clean = RemoveSep(" ", clean);
 
     return clean;
